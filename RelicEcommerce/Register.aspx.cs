@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
+using System.Web;
 
 public partial class Register : Page
 {
@@ -10,7 +11,7 @@ public partial class Register : Page
         if (!IsPostBack)
         {
             // If user is already logged in, redirect to home
-            if (User.Identity.IsAuthenticated)
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 Response.Redirect("~/Default.aspx");
             }

@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web;
 
 public partial class _Default : Page
 {
@@ -22,15 +23,18 @@ public partial class _Default : Page
     {
         try
         {
+            System.Diagnostics.Debug.WriteLine("[Default] Loading categories...");
             string query = "SELECT TOP 6 CategoryID, CategoryName, ImageUrl FROM Category WHERE IsActive = 1 ORDER BY CategoryName";
             DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
             
+            System.Diagnostics.Debug.WriteLine("[Default] Categories loaded: " + dt.Rows.Count);
             rptCategories.DataSource = dt;
             rptCategories.DataBind();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine("Error loading categories: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("[Default] ERROR loading categories: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("[Default] Stack trace: " + ex.StackTrace);
         }
     }
 
@@ -41,6 +45,7 @@ public partial class _Default : Page
     {
         try
         {
+            System.Diagnostics.Debug.WriteLine("[Default] Loading featured products...");
             string query = @"SELECT TOP 8 
                             ProductID, ProductName, Description, Price, DiscountPrice, 
                             ImageUrl, IsFeatured, StockQuantity
@@ -50,12 +55,14 @@ public partial class _Default : Page
             
             DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
             
+            System.Diagnostics.Debug.WriteLine("[Default] Featured products loaded: " + dt.Rows.Count);
             rptFeaturedProducts.DataSource = dt;
             rptFeaturedProducts.DataBind();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine("Error loading featured products: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("[Default] ERROR loading featured products: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("[Default] Stack trace: " + ex.StackTrace);
         }
     }
 
@@ -64,7 +71,7 @@ public partial class _Default : Page
     /// </summary>
     protected void AddToCart_Command(object sender, CommandEventArgs e)
     {
-        if (!User.Identity.IsAuthenticated)
+        if (!HttpContext.Current.User.Identity.IsAuthenticated)
         {
             Response.Redirect("~/Login.aspx?ReturnUrl=" + Server.UrlEncode(Request.Url.PathAndQuery));
             return;
@@ -73,7 +80,7 @@ public partial class _Default : Page
         try
         {
             int productId = Convert.ToInt32(e.CommandArgument);
-            string email = User.Identity.Name;
+            string email = HttpContext.Current.User.Identity.Name;
 
             // Get customer ID
             string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";

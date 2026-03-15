@@ -244,12 +244,10 @@
         </div>
     </div>
 
-    <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="server">
-        <script>
-            function validateTerms(sender, args) {
-                var checkbox = document.getElementById('<%= chkTerms.ClientID %>');
-                args.IsValid = checkbox.checked;
-            }
-        </script>
-    </asp:Content>
+    <script type="text/javascript">
+        function validateTerms(sender, args) {
+            var checkbox = document.getElementById('<%= chkTerms.ClientID %>');
+            args.IsValid = checkbox.checked;
+        }
+    </script>
 </asp:Content>

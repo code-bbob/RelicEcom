@@ -126,9 +126,18 @@
                                             </div>
                                         </div>
                                         
-                                        <%# Convert.ToInt32(Eval("StockQuantity")) > 0 ? 
-                                            "<asp:LinkButton ID='btnAddToCart' runat='server' CommandName='AddToCart' CommandArgument='" + Eval("ProductID") + "' OnCommand='AddToCart_Command' CssClass='w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition font-semibold block text-center'><i class='fas fa-shopping-cart mr-2'></i>Add to Cart</asp:LinkButton>" :
-                                            "<button disabled class='w-full bg-gray-300 text-gray-500 py-2 rounded-lg cursor-not-allowed font-semibold'>Out of Stock</button>" %>
+                                        <asp:Panel ID="pnlInStock" runat="server" Visible='<%# Convert.ToInt32(Eval("StockQuantity")) > 0 %>'>
+                                            <asp:LinkButton ID="btnAddToCart" runat="server"
+                                                CommandName="AddToCart"
+                                                CommandArgument='<%# Eval("ProductID") %>'
+                                                OnCommand="AddToCart_Command"
+                                                CssClass="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition font-semibold block text-center">
+                                                <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
+                                            </asp:LinkButton>
+                                        </asp:Panel>
+                                        <asp:Panel ID="pnlOutOfStock" runat="server" Visible='<%# Convert.ToInt32(Eval("StockQuantity")) <= 0 %>'>
+                                            <button disabled class="w-full bg-gray-300 text-gray-500 py-2 rounded-lg cursor-not-allowed font-semibold">Out of Stock</button>
+                                        </asp:Panel>
                                     </div>
                                 </div>
                             </ItemTemplate>

@@ -3,17 +3,30 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Security;
 using System.Web.UI;
+using System.Web;
 
-public partial class SiteMaster : MasterPage
+public partial class SiteMaster : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        try
         {
-            if (User.Identity.IsAuthenticated)
+            System.Diagnostics.Debug.WriteLine("[SiteMaster] Page_Load started");
+
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 UpdateCartCount();
             }
+            else if (lblCartCount != null)
+            {
+                lblCartCount.Text = "0";
+            }
+
+            System.Diagnostics.Debug.WriteLine("[SiteMaster] Page_Load completed");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("[SiteMaster] ERROR in Page_Load: " + ex.Message);
         }
     }
 
@@ -24,7 +37,13 @@ public partial class SiteMaster : MasterPage
     {
         try
         {
-            string email = User.Identity.Name;
+            string email = HttpContext.Current.User.Identity.Name;
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                lblCartCount.Text = "0";
+                return;
+            }
             
             // Get customer ID from email
             string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";
@@ -43,11 +62,16 @@ public partial class SiteMaster : MasterPage
                 int cartCount = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(cartQuery, cartParams));
                 lblCartCount.Text = cartCount.ToString();
             }
+            else
+            {
+                lblCartCount.Text = "0";
+            }
         }
         catch (Exception ex)
         {
             // Log error
             System.Diagnostics.Debug.WriteLine("Error updating cart count: " + ex.Message);
+            lblCartCount.Text = "0";
         }
     }
 
@@ -56,12 +80,12 @@ public partial class SiteMaster : MasterPage
     /// </summary>
     protected bool IsUserAdmin()
     {
-        if (!User.Identity.IsAuthenticated)
+        if (!HttpContext.Current.User.Identity.IsAuthenticated)
             return false;
 
         try
         {
-            string email = User.Identity.Name;
+            string email = HttpContext.Current.User.Identity.Name;
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
             

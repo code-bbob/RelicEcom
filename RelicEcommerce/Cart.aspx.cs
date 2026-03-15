@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web;
 
 public partial class Cart : Page
 {
@@ -10,7 +11,7 @@ public partial class Cart : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!User.Identity.IsAuthenticated)
+        if (!HttpContext.Current.User.Identity.IsAuthenticated)
         {
             Response.Redirect("~/Login.aspx?ReturnUrl=" + Server.UrlEncode(Request.Url.PathAndQuery));
             return;
@@ -30,7 +31,7 @@ public partial class Cart : Page
     {
         try
         {
-            string email = User.Identity.Name;
+            string email = HttpContext.Current.User.Identity.Name;
             string query = "SELECT CustomerID FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
             

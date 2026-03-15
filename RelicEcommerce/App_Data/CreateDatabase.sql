@@ -1,10 +1,13 @@
 -- Relic E-Commerce Database Schema
 -- This script creates all tables for the Relic mobile e-commerce application
+-- Compatible with both SQL Server and LocalDB
 
+-- For LocalDB: Just run this script after connecting to the database
+-- For SQL Server: Uncomment the lines below
+/*
 USE master;
 GO
 
--- Create database if it doesn't exist
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'RelicDB')
 BEGIN
     CREATE DATABASE RelicDB;
@@ -13,6 +16,7 @@ GO
 
 USE RelicDB;
 GO
+*/
 
 -- Table: Customer
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Customer]') AND type in (N'U'))

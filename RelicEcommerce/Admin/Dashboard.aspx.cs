@@ -2,13 +2,14 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
+using System.Web;
 
 public partial class Admin_Dashboard : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         // Check if user is authenticated and is admin
-        if (!User.Identity.IsAuthenticated)
+        if (!HttpContext.Current.User.Identity.IsAuthenticated)
         {
             Response.Redirect("~/Login.aspx");
             return;
@@ -33,7 +34,7 @@ public partial class Admin_Dashboard : Page
     {
         try
         {
-            string email = User.Identity.Name;
+            string email = HttpContext.Current.User.Identity.Name;
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
             

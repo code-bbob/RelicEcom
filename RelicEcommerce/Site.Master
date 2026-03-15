@@ -31,9 +31,6 @@
 <body class="bg-gray-50">
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
-            <Scripts>
-                <asp:ScriptReference Name="jquery" />
-            </Scripts>
         </asp:ScriptManager>
 
         <!-- Header/Navigation -->
@@ -47,9 +44,9 @@
                         <i class="fas fa-envelope mr-2"></i>info@relic.com
                     </div>
                     <div>
-                        <% if (User.Identity.IsAuthenticated) { %>
+                        <% if (HttpContext.Current.User.Identity.IsAuthenticated) { %>
                             <span class="text-gray-700 mr-4">
-                                <i class="fas fa-user mr-2"></i>Welcome, <%= User.Identity.Name %>
+                                <i class="fas fa-user mr-2"></i>Welcome, <%= HttpContext.Current.User.Identity.Name %>
                             </span>
                             <asp:LinkButton ID="btnLogout" runat="server" OnClick="Logout_Click" 
                                 CssClass="text-red-600 hover:text-red-800">
@@ -70,24 +67,24 @@
                 <nav class="py-4">
                     <div class="flex justify-between items-center">
                         <!-- Logo -->
-                        <a href="Default.aspx" class="flex items-center">
+                        <a href="<%= ResolveUrl("~/Default.aspx") %>" class="flex items-center">
                             <i class="fas fa-landmark text-3xl text-amber-700 mr-3"></i>
                             <span class="text-2xl font-bold text-gray-800">Relic</span>
                         </a>
 
                         <!-- Desktop Menu -->
                         <div class="hidden md:flex items-center space-x-8">
-                            <a href="Default.aspx" class="text-gray-700 hover:text-amber-700 font-medium transition">Home</a>
-                            <a href="Shop.aspx" class="text-gray-700 hover:text-amber-700 font-medium transition">Shop</a>
-                            <a href="About.aspx" class="text-gray-700 hover:text-amber-700 font-medium transition">About</a>
-                            <a href="Contact.aspx" class="text-gray-700 hover:text-amber-700 font-medium transition">Contact</a>
+                            <a href="<%= ResolveUrl("~/Default.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium transition">Home</a>
+                            <a href="<%= ResolveUrl("~/Shop.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium transition">Shop</a>
+                            <a href="<%= ResolveUrl("~/About.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium transition">About</a>
+                            <a href="<%= ResolveUrl("~/Contact.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium transition">Contact</a>
                             
-                            <% if (User.Identity.IsAuthenticated) { %>
-                                <a href="Profile.aspx" class="text-gray-700 hover:text-amber-700 font-medium transition">Profile</a>
-                                <a href="Orders.aspx" class="text-gray-700 hover:text-amber-700 font-medium transition">My Orders</a>
+                            <% if (HttpContext.Current.User.Identity.IsAuthenticated) { %>
+                                <a href="<%= ResolveUrl("~/Profile.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium transition">Profile</a>
+                                <a href="<%= ResolveUrl("~/Orders.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium transition">My Orders</a>
                                 
                                 <% if (IsUserAdmin()) { %>
-                                    <a href="Admin/Dashboard.aspx" class="text-purple-600 hover:text-purple-800 font-medium transition">
+                                    <a href="<%= ResolveUrl("~/Admin/Dashboard.aspx") %>" class="text-purple-600 hover:text-purple-800 font-medium transition">
                                         <i class="fas fa-user-shield mr-1"></i>Admin
                                     </a>
                                 <% } %>
@@ -96,8 +93,8 @@
 
                         <!-- Cart and Mobile Menu Button -->
                         <div class="flex items-center space-x-4">
-                            <% if (User.Identity.IsAuthenticated) { %>
-                                <a href="Cart.aspx" class="relative text-gray-700 hover:text-amber-700 transition">
+                            <% if (HttpContext.Current.User.Identity.IsAuthenticated) { %>
+                                <a href="<%= ResolveUrl("~/Cart.aspx") %>" class="relative text-gray-700 hover:text-amber-700 transition">
                                     <i class="fas fa-shopping-cart text-2xl"></i>
                                     <asp:Label ID="lblCartCount" runat="server" 
                                         CssClass="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -115,17 +112,17 @@
                     <!-- Mobile Menu -->
                     <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-200">
                         <div class="flex flex-col space-y-3 pt-4">
-                            <a href="Default.aspx" class="text-gray-700 hover:text-amber-700 font-medium py-2">Home</a>
-                            <a href="Shop.aspx" class="text-gray-700 hover:text-amber-700 font-medium py-2">Shop</a>
-                            <a href="About.aspx" class="text-gray-700 hover:text-amber-700 font-medium py-2">About</a>
-                            <a href="Contact.aspx" class="text-gray-700 hover:text-amber-700 font-medium py-2">Contact</a>
+                            <a href="<%= ResolveUrl("~/Default.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium py-2">Home</a>
+                            <a href="<%= ResolveUrl("~/Shop.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium py-2">Shop</a>
+                            <a href="<%= ResolveUrl("~/About.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium py-2">About</a>
+                            <a href="<%= ResolveUrl("~/Contact.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium py-2">Contact</a>
                             
-                            <% if (User.Identity.IsAuthenticated) { %>
-                                <a href="Profile.aspx" class="text-gray-700 hover:text-amber-700 font-medium py-2">Profile</a>
-                                <a href="Orders.aspx" class="text-gray-700 hover:text-amber-700 font-medium py-2">My Orders</a>
+                            <% if (HttpContext.Current.User.Identity.IsAuthenticated) { %>
+                                <a href="<%= ResolveUrl("~/Profile.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium py-2">Profile</a>
+                                <a href="<%= ResolveUrl("~/Orders.aspx") %>" class="text-gray-700 hover:text-amber-700 font-medium py-2">My Orders</a>
                                 
                                 <% if (IsUserAdmin()) { %>
-                                    <a href="Admin/Dashboard.aspx" class="text-purple-600 hover:text-purple-800 font-medium py-2">
+                                    <a href="<%= ResolveUrl("~/Admin/Dashboard.aspx") %>" class="text-purple-600 hover:text-purple-800 font-medium py-2">
                                         <i class="fas fa-user-shield mr-2"></i>Admin Panel
                                     </a>
                                 <% } %>
@@ -173,10 +170,10 @@
                     <div>
                         <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="Default.aspx" class="text-gray-400 hover:text-amber-500 transition">Home</a></li>
-                            <li><a href="Shop.aspx" class="text-gray-400 hover:text-amber-500 transition">Shop</a></li>
-                            <li><a href="About.aspx" class="text-gray-400 hover:text-amber-500 transition">About Us</a></li>
-                            <li><a href="Contact.aspx" class="text-gray-400 hover:text-amber-500 transition">Contact</a></li>
+                            <li><a href="<%= ResolveUrl("~/Default.aspx") %>" class="text-gray-400 hover:text-amber-500 transition">Home</a></li>
+                            <li><a href="<%= ResolveUrl("~/Shop.aspx") %>" class="text-gray-400 hover:text-amber-500 transition">Shop</a></li>
+                            <li><a href="<%= ResolveUrl("~/About.aspx") %>" class="text-gray-400 hover:text-amber-500 transition">About Us</a></li>
+                            <li><a href="<%= ResolveUrl("~/Contact.aspx") %>" class="text-gray-400 hover:text-amber-500 transition">Contact</a></li>
                         </ul>
                     </div>
 

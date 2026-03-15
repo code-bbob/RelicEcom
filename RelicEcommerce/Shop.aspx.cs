@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web;
 
 public partial class Shop : Page
 {
@@ -23,8 +24,11 @@ public partial class Shop : Page
     {
         try
         {
+            System.Diagnostics.Debug.WriteLine("[Shop] Loading categories...");
             string query = "SELECT CategoryID, CategoryName FROM Category WHERE IsActive = 1 ORDER BY CategoryName";
             DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+            
+            System.Diagnostics.Debug.WriteLine("[Shop] Categories loaded: " + dt.Rows.Count);
 
             ddlCategory.DataSource = dt;
             ddlCategory.DataTextField = "CategoryName";
@@ -40,7 +44,12 @@ public partial class Shop : Page
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine("Error loading categories: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("[Shop] ERROR loading categories: " + ex.Message);
+            // Show error on page
+            if (pnlNoResults != null)
+            {
+                pnlNoResults.Visible = true;
+            }
         }
     }
 
@@ -52,7 +61,7 @@ public partial class Shop : Page
         try
         {
             StringBuilder query = new StringBuilder();
-            query.Append(@"SELECT p.ProductID, p.ProductName, p.Description, p.Price, p.DiscountPrice, 
+            query.Append(@"SELECT p.ProductID, p.ProductName, p.Description, p.Price, ISNULL(p.DiscountPrice, 0) AS DiscountPrice, 
                           p.ImageUrl, p.IsFeatured, p.StockQuantity, c.CategoryName
                           FROM Product p
                           INNER JOIN Category c ON p.CategoryID = c.CategoryID
@@ -128,7 +137,7 @@ public partial class Shop : Page
                 rptProducts.DataBind();
                 pnlNoResults.Visible = false;
 
-                lblResultsCount.Text = $"Showing {dt.Rows.Count} product{(dt.Rows.Count != 1 ? "s" : "")}";
+                lblResultsCount.Text = string.Format("Showing {0} product{1}", dt.Rows.Count, (dt.Rows.Count != 1 ? "s" : ""));
             }
             else
             {
@@ -140,9 +149,10 @@ public partial class Shop : Page
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine("Error loading products: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("[Shop] ERROR loading products: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("[Shop] Stack trace: " + ex.StackTrace);
             pnlNoResults.Visible = true;
-            lblResultsCount.Text = "Error loading products";
+            lblResultsCount.Text = "Unable to load products right now.";
         }
     }
 
@@ -171,7 +181,7 @@ public partial class Shop : Page
     /// </summary>
     protected void AddToCart_Command(object sender, CommandEventArgs e)
     {
-        if (!User.Identity.IsAuthenticated)
+        if (!HttpContext.Current.User.Identity.IsAuthenticated)
         {
             Response.Redirect("~/Login.aspx?ReturnUrl=" + Server.UrlEncode(Request.Url.PathAndQuery));
             return;
@@ -180,7 +190,7 @@ public partial class Shop : Page
         try
         {
             int productId = Convert.ToInt32(e.CommandArgument);
-            string email = User.Identity.Name;
+            string email = HttpContext.Current.User.Identity.Name;
 
             // Get customer ID
             string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";

@@ -3,17 +3,24 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Security;
 using System.Web.UI;
+using System.Web;
 
 public partial class Login : Page
 {
+    private void SafeRedirect(string url)
+    {
+        Response.Redirect(url, false);
+        Context.ApplicationInstance.CompleteRequest();
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             // If user is already logged in, redirect to home
-            if (User.Identity.IsAuthenticated)
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                Response.Redirect("~/Default.aspx");
+                SafeRedirect("~/Default.aspx");
             }
         }
     }
@@ -50,28 +57,13 @@ public partial class Login : Page
                 {
                     // Update last login
                     string updateQuery = "UPDATE Customer SET LastLogin = GETDATE() WHERE Email = @Email";
-                    RelicEcommerce.DBHelper.ExecuteNonQuery(updateQuery, parameters);
+                    SqlParameter[] updateParameters = {
+                        new SqlParameter("@Email", email)
+                    };
+                    RelicEcommerce.DBHelper.ExecuteNonQuery(updateQuery, updateParameters);
 
-                    // Create authentication ticket
-                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
-                        1,
-                        email,
-                        DateTime.Now,
-                        DateTime.Now.AddMinutes(chkRememberMe.Checked ? 43200 : 30), // 30 days or 30 minutes
-                        chkRememberMe.Checked,
-                        row["IsAdmin"].ToString(),
-                        FormsAuthentication.FormsCookiePath
-                    );
-
-                    string encryptedTicket = FormsAuthentication.Encrypt(ticket);
-                    System.Web.HttpCookie authCookie = new System.Web.HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                    
-                    if (chkRememberMe.Checked)
-                    {
-                        authCookie.Expires = ticket.Expiration;
-                    }
-                    
-                    Response.Cookies.Add(authCookie);
+                    // Create authentication cookie
+                    FormsAuthentication.SetAuthCookie(email, chkRememberMe.Checked);
 
                     // Store user info in session
                     Session["CustomerID"] = row["CustomerID"];
@@ -84,15 +76,15 @@ public partial class Login : Page
                     
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        Response.Redirect(returnUrl);
+                        SafeRedirect(returnUrl);
                     }
                     else if (Convert.ToBoolean(row["IsAdmin"]))
                     {
-                        Response.Redirect("~/Admin/Dashboard.aspx");
+                        SafeRedirect("~/Admin/Dashboard.aspx");
                     }
                     else
                     {
-                        Response.Redirect("~/Default.aspx");
+                        SafeRedirect("~/Default.aspx");
                     }
                 }
                 else

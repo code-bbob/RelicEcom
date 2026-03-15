@@ -116,7 +116,7 @@
                                          alt='<%# Eval("ProductName") %>' 
                                          class="w-full h-full object-cover"
                                          onerror="this.src='/Images/placeholder.jpg'" />
-                                    <%# Convert.ToDecimal(Eval("DiscountPrice")) > 0 ? 
+                                     <%# Convert.ToDecimal(Eval("DiscountPrice")) > 0 ? 
                                         "<span class='absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold'>SALE</span>" : "" %>
                                     <%# Convert.ToBoolean(Eval("IsFeatured")) ? 
                                         "<span class='absolute top-3 left-3 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold'>Featured</span>" : "" %>

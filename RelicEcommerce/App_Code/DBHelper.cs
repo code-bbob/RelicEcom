@@ -2,91 +2,147 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web;
 
 namespace RelicEcommerce
 {
-    /// <summary>
-    /// Database helper class for common database operations
-    /// </summary>
     public class DBHelper
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["RelicConnectionString"].ConnectionString;
+        private static void Log(string message)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("[DBHelper] " + message);
+                if (HttpContext.Current != null)
+                {
+                    HttpContext.Current.Trace.Write("DBHelper", message);
+                }
+            }
+            catch { }
+        }
 
-        /// <summary>
-        /// Get SQL Connection
-        /// </summary>
         public static SqlConnection GetConnection()
         {
-            return new SqlConnection(connectionString);
+            try
+            {
+                Log("Getting connection string...");
+                
+                if (ConfigurationManager.ConnectionStrings["RelicConnectionString"] == null)
+                {
+                    Log("ERROR: RelicConnectionString not found in Web.config");
+                    throw new Exception("Connection string 'RelicConnectionString' not found in Web.config");
+                }
+                
+                string connectionString = ConfigurationManager.ConnectionStrings["RelicConnectionString"].ConnectionString;
+                
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    Log("ERROR: Connection string is empty");
+                    throw new Exception("Connection string is empty");
+                }
+                
+                Log("Connection string retrieved: " + connectionString);
+                return new SqlConnection(connectionString);
+            }
+            catch (Exception ex)
+            {
+                Log("ERROR in GetConnection: " + ex.Message);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Execute non-query command (INSERT, UPDATE, DELETE)
-        /// </summary>
         public static int ExecuteNonQuery(string query, SqlParameter[] parameters = null)
         {
-            using (SqlConnection conn = GetConnection())
+            try
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                Log("ExecuteNonQuery called");
+                using (SqlConnection conn = GetConnection())
                 {
-                    if (parameters != null)
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddRange(parameters);
+                        if (parameters != null)
+                        {
+                            cmd.Parameters.AddRange(parameters);
+                        }
+                        
+                        Log("Opening connection...");
+                        conn.Open();
+                        Log("Connection opened, executing query...");
+                        int result = cmd.ExecuteNonQuery();
+                        Log("Query executed successfully");
+                        return result;
                     }
-                    
-                    conn.Open();
-                    return cmd.ExecuteNonQuery();
                 }
+            }
+            catch (Exception ex)
+            {
+                Log("ERROR in ExecuteNonQuery: " + ex.Message);
+                throw;
             }
         }
 
-        /// <summary>
-        /// Execute scalar command (COUNT, MAX, etc.)
-        /// </summary>
         public static object ExecuteScalar(string query, SqlParameter[] parameters = null)
         {
-            using (SqlConnection conn = GetConnection())
+            try
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                Log("ExecuteScalar called");
+                using (SqlConnection conn = GetConnection())
                 {
-                    if (parameters != null)
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddRange(parameters);
+                        if (parameters != null)
+                        {
+                            cmd.Parameters.AddRange(parameters);
+                        }
+                        
+                        Log("Opening connection...");
+                        conn.Open();
+                        Log("Connection opened, executing scalar...");
+                        object result = cmd.ExecuteScalar();
+                        Log("Scalar executed successfully");
+                        return result;
                     }
-                    
-                    conn.Open();
-                    return cmd.ExecuteScalar();
                 }
+            }
+            catch (Exception ex)
+            {
+                Log("ERROR in ExecuteScalar: " + ex.Message);
+                throw;
             }
         }
 
-        /// <summary>
-        /// Execute query and return DataTable
-        /// </summary>
         public static DataTable ExecuteQuery(string query, SqlParameter[] parameters = null)
         {
-            using (SqlConnection conn = GetConnection())
+            try
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                Log("ExecuteQuery called: " + query);
+                using (SqlConnection conn = GetConnection())
                 {
-                    if (parameters != null)
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddRange(parameters);
-                    }
-                    
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        return dt;
+                        if (parameters != null)
+                        {
+                            cmd.Parameters.AddRange(parameters);
+                        }
+                        
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            Log("Filling DataTable...");
+                            adapter.Fill(dt);
+                            Log("DataTable filled with " + dt.Rows.Count + " rows");
+                            return dt;
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Log("ERROR in ExecuteQuery: " + ex.Message);
+                throw new Exception("Database query failed: " + ex.Message, ex);
+            }
         }
 
-        /// <summary>
-        /// Execute query and return DataSet
-        /// </summary>
         public static DataSet ExecuteDataSet(string query, SqlParameter[] parameters = null)
         {
             using (SqlConnection conn = GetConnection())
@@ -108,12 +164,9 @@ namespace RelicEcommerce
             }
         }
 
-        /// <summary>
-        /// Check if record exists
-        /// </summary>
         public static bool RecordExists(string tableName, string columnName, object value)
         {
-            string query = $"SELECT COUNT(*) FROM {tableName} WHERE {columnName} = @Value";
+            string query = string.Format("SELECT COUNT(*) FROM {0} WHERE {1} = @Value", tableName, columnName);
             SqlParameter[] parameters = { new SqlParameter("@Value", value) };
             
             int count = Convert.ToInt32(ExecuteScalar(query, parameters));
