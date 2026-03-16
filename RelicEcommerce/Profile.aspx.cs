@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
 
-public partial class Profile : Page
+public partial class ProfilePage : Page
 {
     private int customerId;
 
