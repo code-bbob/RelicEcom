@@ -47,7 +47,7 @@ public partial class _Default : Page
         {
             System.Diagnostics.Debug.WriteLine("[Default] Loading featured products...");
             string query = @"SELECT TOP 8 
-                            ProductID, ProductName, Description, Price, DiscountPrice, 
+                            ProductID, ProductName, Description, Price, ISNULL(DiscountPrice, 0) AS DiscountPrice, 
                             ImageUrl, IsFeatured, StockQuantity
                         FROM Product 
                         WHERE IsActive = 1 AND IsFeatured = 1 AND StockQuantity > 0

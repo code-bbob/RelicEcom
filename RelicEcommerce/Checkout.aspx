@@ -43,16 +43,14 @@
                 <h2 class="text-xl font-semibold text-gray-800 mt-8 mb-4">Payment Information</h2>
                 <asp:RadioButtonList ID="rblPaymentMethod" runat="server" RepeatDirection="Vertical" AutoPostBack="true" OnSelectedIndexChanged="rblPaymentMethod_SelectedIndexChanged" CssClass="space-y-2 text-gray-700">
                     <asp:ListItem Value="COD" Text="Cash on Delivery" Selected="True"></asp:ListItem>
-                    <asp:ListItem Value="ESEWA_TEST" Text="eSewa Test Payment"></asp:ListItem>
+                    <asp:ListItem Value="ESEWA" Text="Pay with eSewa"></asp:ListItem>
                 </asp:RadioButtonList>
 
-                <asp:Panel ID="pnlEsewaTest" runat="server" Visible="false" CssClass="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <h3 class="text-lg font-semibold text-green-800 mb-2">eSewa Test Details</h3>
-                    <p class="text-sm text-green-700 mb-3">This is a simulated eSewa payment for testing only. No real transaction is processed.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <asp:TextBox ID="txtEsewaPhone" runat="server" CssClass="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="eSewa Phone / ID"></asp:TextBox>
-                        <asp:TextBox ID="txtEsewaTxnRef" runat="server" CssClass="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Optional reference"></asp:TextBox>
-                    </div>
+                <asp:Panel ID="pnlEsewaInfo" runat="server" Visible="false" CssClass="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h3 class="text-lg font-semibold text-green-800 mb-2">eSewa Payment</h3>
+                    <p class="text-sm text-green-700">
+                        You will be redirected to eSewa to complete payment securely. After payment, you will return here automatically.
+                    </p>
                 </asp:Panel>
 
                 <div class="mt-4 flex gap-3">
