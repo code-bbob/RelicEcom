@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -25,7 +25,7 @@ public partial class Orders : Page
         string email = HttpContext.Current.User.Identity.Name;
         string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";
         SqlParameter[] customerParams = { new SqlParameter("@Email", email) };
-        object customerIdObj = RelicEcommerce.DBHelper.ExecuteScalar(customerQuery, customerParams);
+        object customerIdObj = KalaSmriti.DBHelper.ExecuteScalar(customerQuery, customerParams);
 
         if (customerIdObj == null)
         {
@@ -39,9 +39,10 @@ public partial class Orders : Page
                          WHERE CustomerID = @CustomerID
                          ORDER BY OrderDate DESC";
         SqlParameter[] parameters = { new SqlParameter("@CustomerID", Convert.ToInt32(customerIdObj)) };
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
 
         gvOrders.DataSource = dt;
         gvOrders.DataBind();
     }
 }
+

@@ -1,9 +1,9 @@
-# 🎉 Database Connection Fixed!
+﻿# ðŸŽ‰ Database Connection Fixed!
 
-## ✅ What Was Fixed
+## âœ… What Was Fixed
 
 1. **Database Configuration**
-   - Created RelicDB database with all 8 tables
+   - Created KalaSmritiDB database with all 8 tables
    - Inserted sample data (12 categories, 16 products, 2 users)
    - Configured proper SQL Server connection
 
@@ -14,25 +14,25 @@
 
 3. **Connection String**
    - Updated `Web.config` to use SQL Server (not LocalDB file)
-   - Current: `Data Source=.;Initial Catalog=RelicDB;Integrated Security=True;Encrypt=False`
+   - Current: `Data Source=.;Initial Catalog=KalaSmritiDB;Integrated Security=True;Encrypt=False`
 
 4. **Setup Tools**
    - Created `SetupDatabase.ps1` for easy database setup
    - Created `DATABASE_SETUP.md` with detailed instructions
 
-## 🔐 Login Credentials
+## ðŸ” Login Credentials
 
 **Admin Account:**
-- Email: `admin@relic.com`
+- Email: `admin@kalasmriti.com`
 - Password: `Admin@123`
 
 **Test User:**
 - Email: `bibhab@gmail.com`
 - Password: `User@123`
 
-## 📊 Database Status
+## ðŸ“Š Database Status
 
-✓ 8 tables created:
+âœ“ 8 tables created:
   - Cart
   - Category
   - Customer
@@ -42,12 +42,12 @@
   - Product
   - Review
 
-✓ Sample data loaded:
+âœ“ Sample data loaded:
   - 12 categories
   - 16 products
   - 2 users (1 admin, 1 customer)
 
-## 🚀 Next Steps
+## ðŸš€ Next Steps
 
 1. **Build your solution** in Visual Studio (Ctrl+Shift+B)
 2. **Run the application** (F5)
@@ -55,31 +55,31 @@
 4. **Test Login** - use the credentials above
 5. **Access Admin Dashboard** - login as admin and go to `/Admin/Dashboard.aspx`
 
-## 🔧 Files Modified
+## ðŸ”§ Files Modified
 
-- ✏️ `App_Code/DBHelper.cs` - Added robust error handling
-- ✏️ `Web.config` - Updated connection string for SQL Server
-- ✏️ `App_Data/CreateDatabase.sql` - Made compatible with both SQL Server and LocalDB
-- ➕ `App_Data/SetupDatabase.ps1` - Automated setup script
-- ➕ `App_Data/DATABASE_SETUP.md` - Detailed setup instructions
-- ➕ `App_Data/FIXES_APPLIED.md` - This file
+- âœï¸ `App_Code/DBHelper.cs` - Added robust error handling
+- âœï¸ `Web.config` - Updated connection string for SQL Server
+- âœï¸ `App_Data/CreateDatabase.sql` - Made compatible with both SQL Server and LocalDB
+- âž• `App_Data/SetupDatabase.ps1` - Automated setup script
+- âž• `App_Data/DATABASE_SETUP.md` - Detailed setup instructions
+- âž• `App_Data/FIXES_APPLIED.md` - This file
 
-## 💡 If You Still See Errors
+## ðŸ’¡ If You Still See Errors
 
 1. **Rebuild the solution** (Build > Rebuild Solution)
 2. **Clear browser cache** (Ctrl+Shift+Delete)
 3. **Check Web.config** connection string matches your SQL Server instance
 4. **Restart IIS Express** or your web server
 
-## 📝 Technical Details
+## ðŸ“ Technical Details
 
 **SQL Server Instance:** `.` (default instance)
-**Database Name:** RelicDB
+**Database Name:** KalaSmritiDB
 **Authentication:** Windows Authentication (Integrated Security)
 **Connection Timeout:** 30 seconds
 **Encryption:** Disabled (for local development)
 
-## 🆘 Troubleshooting
+## ðŸ†˜ Troubleshooting
 
 **If products still don't load:**
 - Check Visual Studio Output window for error details
@@ -94,4 +94,5 @@
 ---
 
 **Database setup completed at:** February 20, 2026
-**Status:** ✅ All systems operational
+**Status:** âœ… All systems operational
+

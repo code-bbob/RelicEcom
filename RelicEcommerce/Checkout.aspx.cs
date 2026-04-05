@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -120,7 +120,7 @@ public partial class Checkout : Page
         string email = HttpContext.Current.User.Identity.Name;
         string query = "SELECT CustomerID FROM Customer WHERE Email = @Email";
         SqlParameter[] parameters = { new SqlParameter("@Email", email) };
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
         return result == null ? 0 : Convert.ToInt32(result);
     }
 
@@ -128,7 +128,7 @@ public partial class Checkout : Page
     {
         string query = "SELECT Address, City, State, ZipCode, Country FROM Customer WHERE CustomerID = @CustomerID";
         SqlParameter[] parameters = { new SqlParameter("@CustomerID", customerId) };
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
         if (dt.Rows.Count == 0) return;
 
         DataRow row = dt.Rows[0];
@@ -148,7 +148,7 @@ public partial class Checkout : Page
                          INNER JOIN Product p ON p.ProductID = c.ProductID
                          WHERE c.CustomerID = @CustomerID";
         SqlParameter[] parameters = { new SqlParameter("@CustomerID", customerId) };
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
 
         rptItems.DataSource = dt;
         rptItems.DataBind();
@@ -188,7 +188,7 @@ public partial class Checkout : Page
             new SqlParameter("@ShippingCountry", txtCountry.Text.Trim())
         };
 
-        return Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(orderQuery, orderParams));
+        return Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(orderQuery, orderParams));
     }
 
     private void CreateOrderItems(int orderId, DataTable cartItems)
@@ -209,7 +209,7 @@ public partial class Checkout : Page
                 new SqlParameter("@UnitPrice", unitPrice),
                 new SqlParameter("@TotalPrice", lineTotal)
             };
-            RelicEcommerce.DBHelper.ExecuteNonQuery(itemQuery, itemParams);
+            KalaSmriti.DBHelper.ExecuteNonQuery(itemQuery, itemParams);
         }
     }
 
@@ -224,7 +224,7 @@ public partial class Checkout : Page
             new SqlParameter("@PaymentStatus", paymentStatus),
             new SqlParameter("@TransactionID", string.IsNullOrWhiteSpace(transactionId) ? (object)DBNull.Value : transactionId)
         };
-        RelicEcommerce.DBHelper.ExecuteNonQuery(paymentQuery, paymentParams);
+        KalaSmriti.DBHelper.ExecuteNonQuery(paymentQuery, paymentParams);
     }
 
     private void RedirectToEsewa(int orderId, string transactionUuid, decimal amount)
@@ -254,7 +254,7 @@ public partial class Checkout : Page
         string signature = GenerateEsewaSignature(signatureMessage, secretKey);
 
         // Store orderId in session so the callback page can retrieve it.
-        // Success URL must have NO query params — eSewa always appends ?data=BASE64,
+        // Success URL must have NO query params â€” eSewa always appends ?data=BASE64,
         // so any existing ? would create a broken double-? URL.
         Session["EsewaPendingOrderId"] = orderId;
         string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority) + ResolveUrl("~/Checkout.aspx");
@@ -379,7 +379,7 @@ public partial class Checkout : Page
         }
 
         string query = "SELECT CustomerID FROM [Order] WHERE OrderID = @OrderID";
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@OrderID", orderId) });
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@OrderID", orderId) });
         return result == null ? 0 : Convert.ToInt32(result);
     }
 
@@ -391,7 +391,7 @@ public partial class Checkout : Page
         }
 
         string query = "SELECT Email FROM Customer WHERE CustomerID = @CustomerID";
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@CustomerID", localCustomerId) });
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@CustomerID", localCustomerId) });
         return result == null ? string.Empty : result.ToString();
     }
 
@@ -406,7 +406,7 @@ public partial class Checkout : Page
         {
             string email = GetCustomerEmailById(localCustomerId);
             string fullBody = "Order #" + orderId + ": " + body;
-            RelicEcommerce.NotificationService.SendOrderNotification(localCustomerId, email, title, fullBody);
+            KalaSmriti.NotificationService.SendOrderNotification(localCustomerId, email, title, fullBody);
         }
         catch
         {
@@ -417,7 +417,7 @@ public partial class Checkout : Page
     private void MarkPaymentSuccess(int orderId, string gatewayTransactionCode)
     {
         string updateOrder = "UPDATE [Order] SET PaymentStatus = 'Paid', OrderStatus = 'Confirmed' WHERE OrderID = @OrderID";
-        RelicEcommerce.DBHelper.ExecuteNonQuery(updateOrder, new[] { new SqlParameter("@OrderID", orderId) });
+        KalaSmriti.DBHelper.ExecuteNonQuery(updateOrder, new[] { new SqlParameter("@OrderID", orderId) });
 
         string updatePayment = @"UPDATE Payment
                                  SET PaymentStatus = 'Paid', PaymentDate = GETDATE(), TransactionID = @TransactionID
@@ -426,7 +426,7 @@ public partial class Checkout : Page
             new SqlParameter("@OrderID", orderId),
             new SqlParameter("@TransactionID", gatewayTransactionCode)
         };
-        RelicEcommerce.DBHelper.ExecuteNonQuery(updatePayment, parameters);
+        KalaSmriti.DBHelper.ExecuteNonQuery(updatePayment, parameters);
     }
 
     private void MarkPaymentFailed(int orderId, string note)
@@ -436,10 +436,10 @@ public partial class Checkout : Page
             new SqlParameter("@OrderID", orderId),
             new SqlParameter("@Note", note)
         };
-        RelicEcommerce.DBHelper.ExecuteNonQuery(updateOrder, orderParams);
+        KalaSmriti.DBHelper.ExecuteNonQuery(updateOrder, orderParams);
 
         string updatePayment = "UPDATE Payment SET PaymentStatus = 'Failed' WHERE OrderID = @OrderID";
-        RelicEcommerce.DBHelper.ExecuteNonQuery(updatePayment, new[] { new SqlParameter("@OrderID", orderId) });
+        KalaSmriti.DBHelper.ExecuteNonQuery(updatePayment, new[] { new SqlParameter("@OrderID", orderId) });
     }
 
     private PaymentContext GetPaymentContext(int orderId)
@@ -449,7 +449,7 @@ public partial class Checkout : Page
                          INNER JOIN Payment p ON p.OrderID = o.OrderID
                          WHERE o.OrderID = @OrderID";
 
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@OrderID", orderId) });
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@OrderID", orderId) });
         if (dt.Rows.Count == 0)
         {
             return null;
@@ -473,13 +473,13 @@ public partial class Checkout : Page
                                FROM Product p
                                INNER JOIN Order_Item oi ON oi.ProductID = p.ProductID
                                WHERE oi.OrderID = @OrderID";
-        RelicEcommerce.DBHelper.ExecuteNonQuery(updateStock, new[] { new SqlParameter("@OrderID", orderId) });
+        KalaSmriti.DBHelper.ExecuteNonQuery(updateStock, new[] { new SqlParameter("@OrderID", orderId) });
     }
 
     private void ClearCart(int localCustomerId)
     {
         string clearCart = "DELETE FROM Cart WHERE CustomerID = @CustomerID";
-        RelicEcommerce.DBHelper.ExecuteNonQuery(clearCart, new[] { new SqlParameter("@CustomerID", localCustomerId) });
+        KalaSmriti.DBHelper.ExecuteNonQuery(clearCart, new[] { new SqlParameter("@CustomerID", localCustomerId) });
     }
 
     private static string GenerateEsewaSignature(string message, string secretKey)
@@ -587,3 +587,4 @@ public partial class Checkout : Page
         public decimal total_amount { get; set; }
     }
 }
+

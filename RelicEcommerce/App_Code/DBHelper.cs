@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
 
-namespace RelicEcommerce
+namespace KalaSmriti
 {
     public class DBHelper
     {
@@ -27,13 +27,13 @@ namespace RelicEcommerce
             {
                 Log("Getting connection string...");
                 
-                if (ConfigurationManager.ConnectionStrings["RelicConnectionString"] == null)
+                if (ConfigurationManager.ConnectionStrings["KalaSmritiConnectionString"] == null)
                 {
-                    Log("ERROR: RelicConnectionString not found in Web.config");
-                    throw new Exception("Connection string 'RelicConnectionString' not found in Web.config");
+                    Log("ERROR: KalaSmritiConnectionString not found in Web.config");
+                    throw new Exception("Connection string 'KalaSmritiConnectionString' not found in Web.config");
                 }
                 
-                string connectionString = ConfigurationManager.ConnectionStrings["RelicConnectionString"].ConnectionString;
+                string connectionString = ConfigurationManager.ConnectionStrings["KalaSmritiConnectionString"].ConnectionString;
                 
                 if (string.IsNullOrEmpty(connectionString))
                 {
@@ -174,3 +174,4 @@ namespace RelicEcommerce
         }
     }
 }
+

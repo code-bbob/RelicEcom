@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -34,7 +34,7 @@ public partial class Admin_ManageUsers : Page
             string email = HttpContext.Current.User.Identity.Name;
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
-            object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+            object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
             return result != null && Convert.ToBoolean(result);
         }
         catch
@@ -48,7 +48,7 @@ public partial class Admin_ManageUsers : Page
         string query = @"SELECT CustomerID, FirstName, LastName, FirstName + ' ' + LastName AS FullName, Email, Phone, IsAdmin, CreatedDate
                          FROM Customer
                          ORDER BY CreatedDate DESC";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
         gvUsers.DataSource = dt;
         gvUsers.DataBind();
     }
@@ -103,7 +103,7 @@ public partial class Admin_ManageUsers : Page
                     new SqlParameter("@CustomerID", customerId)
                 };
 
-                RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+                KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
                 ShowMessage("User role updated.", false);
                 LoadUsers();
             }
@@ -120,25 +120,25 @@ public partial class Admin_ManageUsers : Page
             try
             {
                 string ownUserQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";
-                object ownIdObj = RelicEcommerce.DBHelper.ExecuteScalar(ownUserQuery, new[] { new SqlParameter("@Email", HttpContext.Current.User.Identity.Name) });
+                object ownIdObj = KalaSmriti.DBHelper.ExecuteScalar(ownUserQuery, new[] { new SqlParameter("@Email", HttpContext.Current.User.Identity.Name) });
                 if (ownIdObj != null && Convert.ToInt32(ownIdObj) == customerId)
                 {
                     ShowMessage("You cannot delete your own account while logged in.", true);
                     return;
                 }
 
-                int orderCount = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar("SELECT COUNT(*) FROM [Order] WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) }));
+                int orderCount = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar("SELECT COUNT(*) FROM [Order] WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) }));
                 if (orderCount > 0)
                 {
                     ShowMessage("Cannot delete this user because they have orders.", true);
                     return;
                 }
 
-                RelicEcommerce.DBHelper.ExecuteNonQuery(@"IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Notification]') AND type in (N'U'))
+                KalaSmriti.DBHelper.ExecuteNonQuery(@"IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Notification]') AND type in (N'U'))
 DELETE FROM Notification WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) });
-                RelicEcommerce.DBHelper.ExecuteNonQuery("DELETE FROM Review WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) });
-                RelicEcommerce.DBHelper.ExecuteNonQuery("DELETE FROM Cart WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) });
-                RelicEcommerce.DBHelper.ExecuteNonQuery("DELETE FROM Customer WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) });
+                KalaSmriti.DBHelper.ExecuteNonQuery("DELETE FROM Review WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) });
+                KalaSmriti.DBHelper.ExecuteNonQuery("DELETE FROM Cart WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) });
+                KalaSmriti.DBHelper.ExecuteNonQuery("DELETE FROM Customer WHERE CustomerID = @CustomerID", new[] { new SqlParameter("@CustomerID", customerId) });
 
                 ShowMessage("User deleted successfully.", false);
                 LoadUsers();
@@ -160,7 +160,7 @@ DELETE FROM Notification WHERE CustomerID = @CustomerID", new[] { new SqlParamet
         try
         {
             string existingQuery = "SELECT COUNT(*) FROM Customer WHERE Email = @Email";
-            int exists = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(existingQuery, new[] { new SqlParameter("@Email", txtEmail.Text.Trim()) }));
+            int exists = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(existingQuery, new[] { new SqlParameter("@Email", txtEmail.Text.Trim()) }));
             if (exists > 0)
             {
                 ShowMessage("An account with this email already exists.", true);
@@ -178,7 +178,7 @@ DELETE FROM Notification WHERE CustomerID = @CustomerID", new[] { new SqlParamet
                 new SqlParameter("@IsAdmin", ddlFormRole.SelectedValue == "1")
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
             ClearForm();
             LoadUsers();
             ShowMessage("User created successfully.", false);
@@ -221,11 +221,11 @@ DELETE FROM Notification WHERE CustomerID = @CustomerID", new[] { new SqlParamet
                 new SqlParameter("@CustomerID", customerId)
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
 
             if (!string.IsNullOrWhiteSpace(txtPassword.Text.Trim()))
             {
-                RelicEcommerce.DBHelper.ExecuteNonQuery("UPDATE Customer SET Password = @Password WHERE CustomerID = @CustomerID",
+                KalaSmriti.DBHelper.ExecuteNonQuery("UPDATE Customer SET Password = @Password WHERE CustomerID = @CustomerID",
                     new[] {
                         new SqlParameter("@Password", txtPassword.Text.Trim()),
                         new SqlParameter("@CustomerID", customerId)
@@ -269,7 +269,7 @@ DELETE FROM Notification WHERE CustomerID = @CustomerID", new[] { new SqlParamet
     private void BeginEditUser(int customerId)
     {
         string query = "SELECT CustomerID, FirstName, LastName, Email, Phone, IsAdmin FROM Customer WHERE CustomerID = @CustomerID";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@CustomerID", customerId) });
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@CustomerID", customerId) });
         if (dt.Rows.Count == 0)
         {
             ShowMessage("User not found.", true);
@@ -318,3 +318,4 @@ DELETE FROM Notification WHERE CustomerID = @CustomerID", new[] { new SqlParamet
             : "mb-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

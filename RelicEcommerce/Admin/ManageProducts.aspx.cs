@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -35,7 +35,7 @@ public partial class Admin_ManageProducts : Page
             string email = HttpContext.Current.User.Identity.Name;
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
-            object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+            object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
             return result != null && Convert.ToBoolean(result);
         }
         catch
@@ -50,7 +50,7 @@ public partial class Admin_ManageProducts : Page
                          FROM Product p
                          INNER JOIN Category c ON p.CategoryID = c.CategoryID
                          ORDER BY p.CreatedDate DESC";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
         gvProducts.DataSource = dt;
         gvProducts.DataBind();
     }
@@ -58,7 +58,7 @@ public partial class Admin_ManageProducts : Page
     private void LoadCategories()
     {
         string query = "SELECT CategoryID, CategoryName FROM Category ORDER BY CategoryName";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
         ddlCategory.DataSource = dt;
         ddlCategory.DataTextField = "CategoryName";
         ddlCategory.DataValueField = "CategoryID";
@@ -91,7 +91,7 @@ public partial class Admin_ManageProducts : Page
                 new SqlParameter("@ImageUrl", formData.ImageUrl)
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
             ClearForm();
             LoadProducts();
             ShowMessage("Product added successfully.", false);
@@ -141,7 +141,7 @@ public partial class Admin_ManageProducts : Page
                 new SqlParameter("@ProductID", productId)
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
             ExitEditMode();
             LoadProducts();
             ShowMessage("Product updated successfully.", false);
@@ -178,28 +178,28 @@ public partial class Admin_ManageProducts : Page
             if (e.CommandName == "DeleteProduct")
             {
                 string cartCheck = "SELECT COUNT(*) FROM Cart WHERE ProductID = @ProductID";
-                int cartRefs = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(cartCheck, new[] { new SqlParameter("@ProductID", productId) }));
+                int cartRefs = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(cartCheck, new[] { new SqlParameter("@ProductID", productId) }));
                 if (cartRefs > 0)
                 {
-                    RelicEcommerce.DBHelper.ExecuteNonQuery("DELETE FROM Cart WHERE ProductID = @ProductID", new[] { new SqlParameter("@ProductID", productId) });
+                    KalaSmriti.DBHelper.ExecuteNonQuery("DELETE FROM Cart WHERE ProductID = @ProductID", new[] { new SqlParameter("@ProductID", productId) });
                 }
 
                 string orderItemCheck = "SELECT COUNT(*) FROM Order_Item WHERE ProductID = @ProductID";
-                int orderRefs = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(orderItemCheck, new[] { new SqlParameter("@ProductID", productId) }));
+                int orderRefs = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(orderItemCheck, new[] { new SqlParameter("@ProductID", productId) }));
                 if (orderRefs > 0)
                 {
                     ShowMessage("This product is used in orders and cannot be deleted. Set it inactive instead.", true);
                     return;
                 }
 
-                RelicEcommerce.DBHelper.ExecuteNonQuery("DELETE FROM Review WHERE ProductID = @ProductID", new[] { new SqlParameter("@ProductID", productId) });
-                RelicEcommerce.DBHelper.ExecuteNonQuery("DELETE FROM Product WHERE ProductID = @ProductID", new[] { new SqlParameter("@ProductID", productId) });
+                KalaSmriti.DBHelper.ExecuteNonQuery("DELETE FROM Review WHERE ProductID = @ProductID", new[] { new SqlParameter("@ProductID", productId) });
+                KalaSmriti.DBHelper.ExecuteNonQuery("DELETE FROM Product WHERE ProductID = @ProductID", new[] { new SqlParameter("@ProductID", productId) });
                 ShowMessage("Product deleted successfully.", false);
             }
             else if (e.CommandName == "ToggleProductActive")
             {
                 string query = "UPDATE Product SET IsActive = CASE WHEN IsActive = 1 THEN 0 ELSE 1 END WHERE ProductID = @ProductID";
-                RelicEcommerce.DBHelper.ExecuteNonQuery(query, new[] { new SqlParameter("@ProductID", productId) });
+                KalaSmriti.DBHelper.ExecuteNonQuery(query, new[] { new SqlParameter("@ProductID", productId) });
                 ShowMessage("Product active status updated.", false);
             }
 
@@ -215,7 +215,7 @@ public partial class Admin_ManageProducts : Page
     {
         string query = @"SELECT ProductID, ProductName, Description, Price, DiscountPrice, CategoryID, StockQuantity
                          FROM Product WHERE ProductID = @ProductID";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
         if (dt.Rows.Count == 0)
         {
             ShowMessage("Product not found.", true);
@@ -333,7 +333,7 @@ public partial class Admin_ManageProducts : Page
         }
 
         string query = "SELECT ImageUrl FROM Product WHERE ProductID = @ProductID";
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@ProductID", productId) });
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@ProductID", productId) });
         return result == null || result == DBNull.Value ? string.Empty : result.ToString();
     }
 
@@ -367,3 +367,4 @@ public partial class Admin_ManageProducts : Page
             : "mb-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

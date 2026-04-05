@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Security;
@@ -44,7 +44,7 @@ public partial class Login : Page
                 new SqlParameter("@Email", email)
             };
 
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
 
             if (dt.Rows.Count > 0)
             {
@@ -60,7 +60,7 @@ public partial class Login : Page
                     SqlParameter[] updateParameters = {
                         new SqlParameter("@Email", email)
                     };
-                    RelicEcommerce.DBHelper.ExecuteNonQuery(updateQuery, updateParameters);
+                    KalaSmriti.DBHelper.ExecuteNonQuery(updateQuery, updateParameters);
 
                     // Create authentication cookie
                     FormsAuthentication.SetAuthCookie(email, chkRememberMe.Checked);
@@ -110,3 +110,4 @@ public partial class Login : Page
         pnlError.Visible = true;
     }
 }
+

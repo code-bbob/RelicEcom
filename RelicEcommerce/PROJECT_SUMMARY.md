@@ -1,19 +1,19 @@
-# Relic E-Commerce Application - Project Summary
+﻿# KalaSmriti E-Commerce Application - Project Summary
 
-## 🎯 Project Completion Status: COMPLETE
+## ðŸŽ¯ Project Completion Status: COMPLETE
 
-I have successfully generated the complete **Relic E-Commerce Mobile Web Application** as proposed in the document. This is a fully functional ASP.NET Web Forms application for selling handicrafts and heritage art products.
+I have successfully generated the complete **KalaSmriti E-Commerce Mobile Web Application** as proposed in the document. This is a fully functional ASP.NET Web Forms application for selling handicrafts and heritage art products.
 
 ---
 
-## 📦 What Has Been Created
+## ðŸ“¦ What Has Been Created
 
-### 1. **Project Structure** ✅
+### 1. **Project Structure** âœ…
 - Complete folder hierarchy (Admin, App_Code, App_Data, CSS, JS, Images)
 - Properly organized ASP.NET Web Forms project
 - Ready to open in Visual Studio
 
-### 2. **Database Layer** ✅
+### 2. **Database Layer** âœ…
 - **CreateDatabase.sql** - Complete SQL Server database schema
 - 8 tables with proper relationships:
   - Customer (user accounts)
@@ -30,7 +30,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - 8 sample products
 - **DBHelper.cs** - Reusable database helper class for CRUD operations
 
-### 3. **Configuration** ✅
+### 3. **Configuration** âœ…
 - **Web.config** - Complete configuration including:
   - Connection strings for LocalDB
   - Forms authentication setup
@@ -38,7 +38,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - Session management
   - Custom error handling
 
-### 4. **Master Page & Layout** ✅
+### 4. **Master Page & Layout** âœ…
 - **Site.Master** - Responsive master page with:
   - Mobile-first navigation with hamburger menu
   - Top bar with user info
@@ -47,7 +47,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - Admin panel access for administrators
   - Dynamic content based on authentication status
 
-### 5. **Authentication Pages** ✅
+### 5. **Authentication Pages** âœ…
 - **Login.aspx** - Secure login with:
   - Email/password authentication
   - Remember me functionality
@@ -61,7 +61,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - Email validation
   - Automatic redirect after success
 
-### 6. **Customer-Facing Pages** ✅
+### 6. **Customer-Facing Pages** âœ…
 - **Default.aspx (Home)** - Landing page featuring:
   - Hero section with CTA
   - Feature highlights
@@ -87,7 +87,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - Empty cart state
   - Proceed to checkout
 
-### 7. **Admin Panel** ✅
+### 7. **Admin Panel** âœ…
 - **Admin/Dashboard.aspx** - Admin dashboard with:
   - Statistics cards (products, orders, users, revenue)
   - Quick action buttons
@@ -95,7 +95,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - Low stock alerts
   - Role-based access control
 
-### 8. **Styling & UI** ✅
+### 8. **Styling & UI** âœ…
 - **CSS/custom.css** - Custom styles including:
   - Scrollbar customization
   - Button hover effects
@@ -114,7 +114,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - Mobile-first approach
   - Consistent design system
 
-### 9. **JavaScript Functionality** ✅
+### 9. **JavaScript Functionality** âœ…
 - **JS/site.js** - Interactive features:
   - Mobile menu toggle
   - Back to top button
@@ -132,7 +132,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
   - Star rating display
   - Copy to clipboard
 
-### 10. **Documentation** ✅
+### 10. **Documentation** âœ…
 - **README.md** - Comprehensive documentation:
   - Project overview
   - Technology stack
@@ -158,49 +158,49 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
 
 ---
 
-## 🎨 Key Features Implemented
+## ðŸŽ¨ Key Features Implemented
 
 ### Customer Features:
-✅ User registration and login  
-✅ Browse products by categories  
-✅ Search and filter products  
-✅ View product details  
-✅ Add to cart functionality  
-✅ Shopping cart management  
-✅ Responsive mobile design  
-✅ Featured products display  
-✅ Sale and discount indicators  
-✅ Stock availability checks  
+âœ… User registration and login  
+âœ… Browse products by categories  
+âœ… Search and filter products  
+âœ… View product details  
+âœ… Add to cart functionality  
+âœ… Shopping cart management  
+âœ… Responsive mobile design  
+âœ… Featured products display  
+âœ… Sale and discount indicators  
+âœ… Stock availability checks  
 
 ### Admin Features:
-✅ Admin dashboard with statistics  
-✅ Product management capability  
-✅ Order tracking system  
-✅ User management  
-✅ Category management  
-✅ Low stock alerts  
-✅ Recent orders view  
-✅ Revenue tracking  
+âœ… Admin dashboard with statistics  
+âœ… Product management capability  
+âœ… Order tracking system  
+âœ… User management  
+âœ… Category management  
+âœ… Low stock alerts  
+âœ… Recent orders view  
+âœ… Revenue tracking  
 
 ### Technical Features:
-✅ Forms Authentication  
-✅ Role-based authorization  
-✅ SQL injection prevention (parameterized queries)  
-✅ Client-side validation  
-✅ Server-side validation  
-✅ Session management  
-✅ Responsive design (mobile-first)  
-✅ Error handling  
-✅ Database helper class for reusable code  
+âœ… Forms Authentication  
+âœ… Role-based authorization  
+âœ… SQL injection prevention (parameterized queries)  
+âœ… Client-side validation  
+âœ… Server-side validation  
+âœ… Session management  
+âœ… Responsive design (mobile-first)  
+âœ… Error handling  
+âœ… Database helper class for reusable code  
 
 ---
 
-## 🚀 How to Use This Application
+## ðŸš€ How to Use This Application
 
 ### Step 1: Open in Visual Studio
 1. Open Visual Studio 2019/2022
-2. File → Open → Web Site
-3. Navigate to: `/home/bibhab/aashma/RelicEcommerce`
+2. File â†’ Open â†’ Web Site
+3. Navigate to: `/home/bibhab/aashma/KalaSmriti`
 4. Click Open
 
 ### Step 2: Setup Database
@@ -216,7 +216,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
 ### Default Login Credentials:
 
 **Admin Account:**
-- Email: `admin@relic.com`
+- Email: `admin@kalasmriti.com`
 - Password: `Admin@123`
 
 **Customer Account:**
@@ -225,7 +225,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
 
 ---
 
-## 📱 Pages Created
+## ðŸ“± Pages Created
 
 ### Public Pages:
 1. `Default.aspx` - Home page
@@ -248,7 +248,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
 
 ---
 
-## 🎯 Technical Specifications
+## ðŸŽ¯ Technical Specifications
 
 ### Frontend:
 - HTML5 (semantic markup)
@@ -272,7 +272,7 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
 
 ---
 
-## 🔒 Security Implemented
+## ðŸ”’ Security Implemented
 
 1. **Authentication** - Forms-based authentication
 2. **Authorization** - Role-based access control
@@ -283,23 +283,23 @@ I have successfully generated the complete **Relic E-Commerce Mobile Web Applica
 
 ---
 
-## 📊 Database Schema
+## ðŸ“Š Database Schema
 
 ```
 Customer (CustomerID, FirstName, LastName, Email, Password, Phone, Address, City, State, ZipCode, Country, IsAdmin, CreatedDate, LastLogin)
-├── Order (OrderID, CustomerID, OrderDate, TotalAmount, OrderStatus, PaymentStatus, ShippingAddress, ...)
-│   ├── Order_Item (OrderItemID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
-│   └── Payment (PaymentID, OrderID, PaymentMethod, PaymentAmount, PaymentDate, PaymentStatus, TransactionID)
-├── Cart (CartID, CustomerID, ProductID, Quantity, AddedDate)
-└── Review (ReviewID, ProductID, CustomerID, Rating, ReviewText, ReviewDate, IsApproved)
+â”œâ”€â”€ Order (OrderID, CustomerID, OrderDate, TotalAmount, OrderStatus, PaymentStatus, ShippingAddress, ...)
+â”‚   â”œâ”€â”€ Order_Item (OrderItemID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
+â”‚   â””â”€â”€ Payment (PaymentID, OrderID, PaymentMethod, PaymentAmount, PaymentDate, PaymentStatus, TransactionID)
+â”œâ”€â”€ Cart (CartID, CustomerID, ProductID, Quantity, AddedDate)
+â””â”€â”€ Review (ReviewID, ProductID, CustomerID, Rating, ReviewText, ReviewDate, IsApproved)
 
 Category (CategoryID, CategoryName, Description, ImageUrl, IsActive, CreatedDate)
-└── Product (ProductID, ProductName, Description, Price, DiscountPrice, CategoryID, StockQuantity, ImageUrl, ...)
+â””â”€â”€ Product (ProductID, ProductName, Description, Price, DiscountPrice, CategoryID, StockQuantity, ImageUrl, ...)
 ```
 
 ---
 
-## ✨ What Makes This Special
+## âœ¨ What Makes This Special
 
 1. **Mobile-First Design** - Optimized for all devices
 2. **Modern UI** - Clean, professional design with Tailwind CSS
@@ -314,22 +314,22 @@ Category (CategoryID, CategoryName, Description, ImageUrl, IsActive, CreatedDate
 
 ---
 
-## 🎓 Learning Outcomes Demonstrated
+## ðŸŽ“ Learning Outcomes Demonstrated
 
-✅ Mobile web development  
-✅ Responsive design with CSS frameworks  
-✅ Database design and implementation  
-✅ Server-side programming with ASP.NET  
-✅ User authentication and authorization  
-✅ CRUD operations  
-✅ Shopping cart functionality  
-✅ Admin panel development  
-✅ Form validation (client & server)  
-✅ Multimedia integration (images, icons)  
+âœ… Mobile web development  
+âœ… Responsive design with CSS frameworks  
+âœ… Database design and implementation  
+âœ… Server-side programming with ASP.NET  
+âœ… User authentication and authorization  
+âœ… CRUD operations  
+âœ… Shopping cart functionality  
+âœ… Admin panel development  
+âœ… Form validation (client & server)  
+âœ… Multimedia integration (images, icons)  
 
 ---
 
-## 📝 Important Notes
+## ðŸ“ Important Notes
 
 ### For Production Deployment:
 1. **Implement password hashing** (BCrypt, PBKDF2, Argon2)
@@ -359,7 +359,7 @@ Category (CategoryID, CategoryName, Description, ImageUrl, IsActive, CreatedDate
 
 ---
 
-## 🔧 Files Created (Summary)
+## ðŸ”§ Files Created (Summary)
 
 **Total Files: 20+**
 
@@ -390,7 +390,7 @@ Category (CategoryID, CategoryName, Description, ImageUrl, IsActive, CreatedDate
 
 ---
 
-## ✅ Quality Checklist
+## âœ… Quality Checklist
 
 - [x] Mobile responsive design
 - [x] Cross-browser compatible
@@ -409,14 +409,14 @@ Category (CategoryID, CategoryName, Description, ImageUrl, IsActive, CreatedDate
 
 ---
 
-## 🎉 Conclusion
+## ðŸŽ‰ Conclusion
 
-The **Relic E-Commerce Mobile Web Application** has been successfully created according to the proposal specifications. This is a complete, functional, and professional e-commerce system ready for:
+The **KalaSmriti E-Commerce Mobile Web Application** has been successfully created according to the proposal specifications. This is a complete, functional, and professional e-commerce system ready for:
 
-1. ✅ Academic demonstration
-2. ✅ Further development
-3. ✅ Portfolio showcase
-4. ✅ Real-world deployment (with production enhancements)
+1. âœ… Academic demonstration
+2. âœ… Further development
+3. âœ… Portfolio showcase
+4. âœ… Real-world deployment (with production enhancements)
 
 The application demonstrates comprehensive knowledge of:
 - Mobile web development
@@ -431,7 +431,7 @@ The application demonstrates comprehensive knowledge of:
 
 ---
 
-## 📞 Support
+## ðŸ“ž Support
 
 Refer to:
 - **README.md** - Complete documentation
@@ -440,6 +440,7 @@ Refer to:
 
 ---
 
-**Project Status: ✅ COMPLETE & READY FOR USE**
+**Project Status: âœ… COMPLETE & READY FOR USE**
 
 Generated on: February 20, 2026
+

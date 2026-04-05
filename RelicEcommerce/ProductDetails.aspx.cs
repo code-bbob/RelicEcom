@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -40,7 +40,7 @@ public partial class ProductDetails : Page
                             WHERE p.ProductID = @ProductID AND p.IsActive = 1";
 
             SqlParameter[] parameters = { new SqlParameter("@ProductID", ProductId) };
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
 
             if (dt.Rows.Count == 0)
             {
@@ -117,7 +117,7 @@ public partial class ProductDetails : Page
 
             string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";
             SqlParameter[] customerParams = { new SqlParameter("@Email", email) };
-            object customerIdObj = RelicEcommerce.DBHelper.ExecuteScalar(customerQuery, customerParams);
+            object customerIdObj = KalaSmriti.DBHelper.ExecuteScalar(customerQuery, customerParams);
 
             if (customerIdObj == null)
             {
@@ -129,7 +129,7 @@ public partial class ProductDetails : Page
 
             string stockQuery = "SELECT StockQuantity FROM Product WHERE ProductID = @ProductID";
             SqlParameter[] stockParams = { new SqlParameter("@ProductID", ProductId) };
-            int stock = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(stockQuery, stockParams));
+            int stock = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(stockQuery, stockParams));
 
             if (stock <= 0)
             {
@@ -142,7 +142,7 @@ public partial class ProductDetails : Page
                 new SqlParameter("@CustomerID", customerId),
                 new SqlParameter("@ProductID", ProductId)
             };
-            object quantityObj = RelicEcommerce.DBHelper.ExecuteScalar(checkQuery, checkParams);
+            object quantityObj = KalaSmriti.DBHelper.ExecuteScalar(checkQuery, checkParams);
 
             if (quantityObj != null && quantityObj != DBNull.Value)
             {
@@ -159,7 +159,7 @@ public partial class ProductDetails : Page
                     new SqlParameter("@CustomerID", customerId),
                     new SqlParameter("@ProductID", ProductId)
                 };
-                RelicEcommerce.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
+                KalaSmriti.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
             }
             else
             {
@@ -168,7 +168,7 @@ public partial class ProductDetails : Page
                     new SqlParameter("@CustomerID", customerId),
                     new SqlParameter("@ProductID", ProductId)
                 };
-                RelicEcommerce.DBHelper.ExecuteNonQuery(insertQuery, insertParams);
+                KalaSmriti.DBHelper.ExecuteNonQuery(insertQuery, insertParams);
             }
 
             ShowMessage("Added to cart successfully.", false);
@@ -192,7 +192,7 @@ public partial class ProductDetails : Page
                          FROM Review
                          WHERE ProductID = @ProductID AND IsApproved = 1";
 
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
         if (dt.Rows.Count == 0)
         {
             lblAverageRating.Text = "No ratings yet";
@@ -217,7 +217,7 @@ public partial class ProductDetails : Page
                          WHERE r.ProductID = @ProductID AND r.IsApproved = 1
                          ORDER BY r.ReviewDate DESC";
 
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
         rptReviews.DataSource = dt;
         rptReviews.DataBind();
         pnlNoReviews.Visible = dt.Rows.Count == 0;
@@ -240,3 +240,4 @@ public partial class ProductDetails : Page
             : "mt-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

@@ -93,7 +93,7 @@
                                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
                                     <a href='ProductDetails.aspx?id=<%# Eval("ProductID") %>'>
                                         <div class="image-zoom relative h-64 bg-gray-200">
-                                            <img src='<%# ResolveUrl(Eval("ImageUrl").ToString()) %>' 
+                                            <img src='<%# GetProductImageUrl(Eval("ImageUrl")) %>' 
                                                  alt='<%# Eval("ProductName") %>' 
                                                  class="w-full h-full object-cover"
                                                  onerror="this.src='/Images/placeholder.jpg'" />

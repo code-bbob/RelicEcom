@@ -1,4 +1,4 @@
-// Relic E-Commerce JavaScript Functions
+// KalaSmriti E-Commerce JavaScript Functions
 
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
@@ -314,4 +314,4 @@ function printInvoice() {
     window.print();
 }
 
-console.log('Relic E-Commerce scripts loaded successfully!');
+console.log('KalaSmriti E-Commerce scripts loaded successfully!');

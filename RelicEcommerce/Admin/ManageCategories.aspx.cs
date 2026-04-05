@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -34,7 +34,7 @@ public partial class Admin_ManageCategories : Page
             string email = HttpContext.Current.User.Identity.Name;
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
-            object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+            object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
             return result != null && Convert.ToBoolean(result);
         }
         catch
@@ -46,7 +46,7 @@ public partial class Admin_ManageCategories : Page
     private void LoadCategories()
     {
         string query = "SELECT CategoryID, CategoryName, Description, IsActive, CreatedDate FROM Category ORDER BY CategoryName";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
         gvCategories.DataSource = dt;
         gvCategories.DataBind();
     }
@@ -80,7 +80,7 @@ public partial class Admin_ManageCategories : Page
                 new SqlParameter("@IsActive", chkCategoryActive.Checked)
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
             txtCategoryName.Text = string.Empty;
             txtDescription.Text = string.Empty;
             txtImageUrl.Text = string.Empty;
@@ -133,7 +133,7 @@ public partial class Admin_ManageCategories : Page
                 new SqlParameter("@CategoryID", categoryId)
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
             ExitEditMode();
             LoadCategories();
             ShowMessage("Category updated successfully.", false);
@@ -169,14 +169,14 @@ public partial class Admin_ManageCategories : Page
             {
                 string toggleQuery = "UPDATE Category SET IsActive = CASE WHEN IsActive = 1 THEN 0 ELSE 1 END WHERE CategoryID = @CategoryID";
                 SqlParameter[] toggleParams = { new SqlParameter("@CategoryID", categoryId) };
-                RelicEcommerce.DBHelper.ExecuteNonQuery(toggleQuery, toggleParams);
+                KalaSmriti.DBHelper.ExecuteNonQuery(toggleQuery, toggleParams);
                 ShowMessage("Category status updated.", false);
             }
             else if (e.CommandName == "DeleteCategory")
             {
                 string checkQuery = "SELECT COUNT(*) FROM Product WHERE CategoryID = @CategoryID";
                 SqlParameter[] checkParams = { new SqlParameter("@CategoryID", categoryId) };
-                int productCount = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(checkQuery, checkParams));
+                int productCount = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(checkQuery, checkParams));
 
                 if (productCount > 0)
                 {
@@ -186,7 +186,7 @@ public partial class Admin_ManageCategories : Page
 
                 string deleteQuery = "DELETE FROM Category WHERE CategoryID = @CategoryID";
                 SqlParameter[] deleteParams = { new SqlParameter("@CategoryID", categoryId) };
-                RelicEcommerce.DBHelper.ExecuteNonQuery(deleteQuery, deleteParams);
+                KalaSmriti.DBHelper.ExecuteNonQuery(deleteQuery, deleteParams);
                 ShowMessage("Category deleted.", false);
             }
 
@@ -201,7 +201,7 @@ public partial class Admin_ManageCategories : Page
     private void BeginEdit(int categoryId)
     {
         string query = "SELECT CategoryID, CategoryName, Description, ImageUrl, IsActive FROM Category WHERE CategoryID = @CategoryID";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@CategoryID", categoryId) });
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@CategoryID", categoryId) });
         if (dt.Rows.Count == 0)
         {
             ShowMessage("Category not found.", true);
@@ -242,3 +242,4 @@ public partial class Admin_ManageCategories : Page
             : "mb-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

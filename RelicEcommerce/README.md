@@ -1,7 +1,7 @@
-# Relic E-Commerce Web Application
+﻿# KalaSmriti E-Commerce Web Application
 
 ## Project Overview
-Relic is a mobile-optimized e-commerce web application designed for selling handicrafts and heritage art products. The system enables customers to browse products, manage shopping carts, place orders, and submit feedback, while administrators can manage products, categories, users, and orders through a secure dashboard.
+KalaSmriti is a mobile-optimized e-commerce web application designed for selling handicrafts and heritage art products. The system enables customers to browse products, manage shopping carts, place orders, and submit feedback, while administrators can manage products, categories, users, and orders through a secure dashboard.
 
 ## Technology Stack
 
@@ -39,33 +39,33 @@ Relic is a mobile-optimized e-commerce web application designed for selling hand
 ## Project Structure
 
 ```
-RelicEcommerce/
-├── Admin/                      # Admin pages (Dashboard, Manage Products, etc.)
-├── App_Code/                   # Helper classes
-│   └── DBHelper.cs            # Database helper class
-├── App_Data/                   # Database files
-│   └── CreateDatabase.sql     # Database schema script
-├── CSS/                        # Stylesheets
-│   └── custom.css             # Custom styles
-├── Images/                     # Image assets
-│   ├── products/              # Product images
-│   └── categories/            # Category images
-├── JS/                         # JavaScript files
-│   └── site.js                # Site-wide JavaScript
-├── Default.aspx               # Home page
-├── Login.aspx                 # Login page
-├── Register.aspx              # Registration page
-├── Shop.aspx                  # Product catalog
-├── ProductDetails.aspx        # Product details
-├── Cart.aspx                  # Shopping cart
-├── Checkout.aspx              # Checkout process
-├── Orders.aspx                # Order history
-├── Profile.aspx               # User profile
-├── About.aspx                 # About page
-├── Contact.aspx               # Contact page
-├── Site.Master                # Master page layout
-├── Site.Master.cs             # Master page code-behind
-└── Web.config                 # Configuration file
+KalaSmriti/
+â”œâ”€â”€ Admin/                      # Admin pages (Dashboard, Manage Products, etc.)
+â”œâ”€â”€ App_Code/                   # Helper classes
+â”‚   â””â”€â”€ DBHelper.cs            # Database helper class
+â”œâ”€â”€ App_Data/                   # Database files
+â”‚   â””â”€â”€ CreateDatabase.sql     # Database schema script
+â”œâ”€â”€ CSS/                        # Stylesheets
+â”‚   â””â”€â”€ custom.css             # Custom styles
+â”œâ”€â”€ Images/                     # Image assets
+â”‚   â”œâ”€â”€ products/              # Product images
+â”‚   â””â”€â”€ categories/            # Category images
+â”œâ”€â”€ JS/                         # JavaScript files
+â”‚   â””â”€â”€ site.js                # Site-wide JavaScript
+â”œâ”€â”€ Default.aspx               # Home page
+â”œâ”€â”€ Login.aspx                 # Login page
+â”œâ”€â”€ Register.aspx              # Registration page
+â”œâ”€â”€ Shop.aspx                  # Product catalog
+â”œâ”€â”€ ProductDetails.aspx        # Product details
+â”œâ”€â”€ Cart.aspx                  # Shopping cart
+â”œâ”€â”€ Checkout.aspx              # Checkout process
+â”œâ”€â”€ Orders.aspx                # Order history
+â”œâ”€â”€ Profile.aspx               # User profile
+â”œâ”€â”€ About.aspx                 # About page
+â”œâ”€â”€ Contact.aspx               # Contact page
+â”œâ”€â”€ Site.Master                # Master page layout
+â”œâ”€â”€ Site.Master.cs             # Master page code-behind
+â””â”€â”€ Web.config                 # Configuration file
 ```
 
 ## Key Features
@@ -153,13 +153,13 @@ RelicEcommerce/
 
 1. **Clone or Extract Project**
    ```
-   Extract the RelicEcommerce folder to your desired location
+   Extract the KalaSmriti folder to your desired location
    ```
 
 2. **Open Project in Visual Studio**
    - Open Visual Studio
-   - File → Open → Project/Solution
-   - Navigate to RelicEcommerce folder
+   - File â†’ Open â†’ Project/Solution
+   - Navigate to KalaSmriti folder
    - Open the .sln file (if available) or the project folder
 
 3. **Create Database**
@@ -178,7 +178,7 @@ RelicEcommerce/
    - Select "Restore NuGet Packages"
 
 6. **Build Project**
-   - Build → Build Solution (Ctrl+Shift+B)
+   - Build â†’ Build Solution (Ctrl+Shift+B)
    - Resolve any errors if they occur
 
 7. **Run Application**
@@ -188,7 +188,7 @@ RelicEcommerce/
 ### Default Login Credentials
 
 **Admin Account:**
-- Email: admin@relic.com
+- Email: admin@kalasmriti.com
 - Password: Admin@123
 
 **Customer Account:**
@@ -202,8 +202,8 @@ RelicEcommerce/
 **Connection String:**
 ```xml
 <connectionStrings>
-  <add name="RelicConnectionString" 
-       connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\RelicDB.mdf;Integrated Security=True;Connect Timeout=30" 
+  <add name="KalaSmritiConnectionString" 
+       connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\KalaSmritiDB.mdf;Integrated Security=True;Connect Timeout=30" 
        providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
@@ -211,7 +211,7 @@ RelicEcommerce/
 **Authentication:**
 ```xml
 <authentication mode="Forms">
-  <forms name=".RelicAuth" 
+  <forms name=".KalaSmritiAuth" 
          loginUrl="~/Login.aspx" 
          defaultUrl="~/Default.aspx" 
          timeout="30" />
@@ -271,7 +271,7 @@ RelicEcommerce/
 3. **Managing Orders**
    - Go to Admin/ManageOrders.aspx
    - View all customer orders
-   - Update order status (Pending → Processing → Shipped → Delivered)
+   - Update order status (Pending â†’ Processing â†’ Shipped â†’ Delivered)
 
 4. **Managing Categories**
    - Access Admin/ManageCategories.aspx
@@ -372,7 +372,7 @@ For issues or questions:
 ## Credits
 
 **Developed by:** Bibhab (as per proposal)
-**Project:** Relic E-Commerce Web Application
+**Project:** KalaSmriti E-Commerce Web Application
 **Course:** Mobile Web & Multimedia
 **Framework:** ASP.NET Web Forms
 **Database:** Microsoft SQL Server
@@ -384,3 +384,4 @@ This is an academic project developed as per the course requirements.
 ---
 
 **Note:** This is a demonstration project for educational purposes. For production deployment, implement proper security measures including password hashing, HTTPS, input sanitization, and regular security audits.
+

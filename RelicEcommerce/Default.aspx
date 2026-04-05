@@ -1,4 +1,4 @@
-<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -162,7 +162,7 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Why Choose Relic?</h2>
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Why Choose KalaSmriti?</h2>
                     <div class="space-y-6">
                         <div class="flex items-start">
                             <div class="bg-amber-100 p-3 rounded-lg mr-4">
@@ -208,7 +208,7 @@
     <section class="py-20 bg-gradient-to-r from-amber-600 to-orange-700 text-white">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-6">Ready to Explore?</h2>
-            <p class="text-xl mb-8 text-amber-50">Join thousands of satisfied customers who trust Relic for authentic heritage products</p>
+            <p class="text-xl mb-8 text-amber-50">Join thousands of satisfied customers who trust KalaSmriti for authentic heritage products</p>
             <div class="flex flex-wrap justify-center gap-4">
                 <% if (!User.Identity.IsAuthenticated) { %>
                     <a href="Register.aspx" class="bg-white text-amber-700 px-8 py-3 rounded-lg font-semibold hover:bg-amber-50 transition shadow-lg hover:shadow-xl">
@@ -222,3 +222,4 @@
         </div>
     </section>
 </asp:Content>
+

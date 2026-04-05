@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -34,7 +34,7 @@ public partial class ProfilePage : Page
         string email = HttpContext.Current.User.Identity.Name;
         string query = "SELECT CustomerID FROM Customer WHERE Email = @Email";
         SqlParameter[] parameters = { new SqlParameter("@Email", email) };
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
         return result == null ? 0 : Convert.ToInt32(result);
     }
 
@@ -43,7 +43,7 @@ public partial class ProfilePage : Page
         string query = @"SELECT FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country
                          FROM Customer WHERE CustomerID = @CustomerID";
         SqlParameter[] parameters = { new SqlParameter("@CustomerID", customerId) };
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
         if (dt.Rows.Count == 0) return;
 
         DataRow row = dt.Rows[0];
@@ -85,7 +85,7 @@ public partial class ProfilePage : Page
                 new SqlParameter("@CustomerID", customerId)
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
             ShowMessage("Profile updated successfully.", false);
         }
         catch (Exception ex)
@@ -103,3 +103,4 @@ public partial class ProfilePage : Page
             : "mb-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

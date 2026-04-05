@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -26,7 +26,7 @@ public partial class Shop : Page
         {
             System.Diagnostics.Debug.WriteLine("[Shop] Loading categories...");
             string query = "SELECT CategoryID, CategoryName FROM Category WHERE IsActive = 1 ORDER BY CategoryName";
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
             
             System.Diagnostics.Debug.WriteLine("[Shop] Categories loaded: " + dt.Rows.Count);
 
@@ -102,7 +102,8 @@ public partial class Shop : Page
                     query.Append(" ORDER BY p.ProductName ASC");
                     break;
                 default: // newest
-                    query.Append(" ORDER BY p.CreatedDate DESC");
+                    // Use ProductID for newest-first so older DBs without CreatedDate still work.
+                    query.Append(" ORDER BY p.ProductID DESC");
                     break;
             }
 
@@ -129,7 +130,7 @@ public partial class Shop : Page
                 }
             }
 
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query.ToString(), parameters.ToArray());
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query.ToString(), parameters.ToArray());
 
             if (dt.Rows.Count > 0)
             {
@@ -195,7 +196,7 @@ public partial class Shop : Page
             // Get customer ID
             string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";
             SqlParameter[] customerParams = { new SqlParameter("@Email", email) };
-            object customerIdObj = RelicEcommerce.DBHelper.ExecuteScalar(customerQuery, customerParams);
+            object customerIdObj = KalaSmriti.DBHelper.ExecuteScalar(customerQuery, customerParams);
 
             if (customerIdObj != null)
             {
@@ -204,7 +205,7 @@ public partial class Shop : Page
                 // Check stock
                 string stockQuery = "SELECT StockQuantity FROM Product WHERE ProductID = @ProductID";
                 SqlParameter[] stockParams = { new SqlParameter("@ProductID", productId) };
-                int stock = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(stockQuery, stockParams));
+                int stock = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(stockQuery, stockParams));
 
                 if (stock == 0)
                 {
@@ -219,7 +220,7 @@ public partial class Shop : Page
                     new SqlParameter("@ProductID", productId)
                 };
 
-                DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(checkQuery, checkParams);
+                DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(checkQuery, checkParams);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -235,7 +236,7 @@ public partial class Shop : Page
                             new SqlParameter("@CustomerID", customerId),
                             new SqlParameter("@ProductID", productId)
                         };
-                        RelicEcommerce.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
+                        KalaSmriti.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
                     }
                 }
                 else
@@ -246,7 +247,7 @@ public partial class Shop : Page
                         new SqlParameter("@CustomerID", customerId),
                         new SqlParameter("@ProductID", productId)
                     };
-                    RelicEcommerce.DBHelper.ExecuteNonQuery(insertQuery, insertParams);
+                    KalaSmriti.DBHelper.ExecuteNonQuery(insertQuery, insertParams);
                 }
 
                 // Refresh page
@@ -258,4 +259,17 @@ public partial class Shop : Page
             System.Diagnostics.Debug.WriteLine("Error adding to cart: " + ex.Message);
         }
     }
+
+    protected string GetProductImageUrl(object imageUrlValue)
+    {
+        string relativePath = Convert.ToString(imageUrlValue);
+
+        if (string.IsNullOrWhiteSpace(relativePath))
+        {
+            return ResolveUrl("~/Images/placeholder.jpg");
+        }
+
+        return ResolveUrl(relativePath);
+    }
 }
+

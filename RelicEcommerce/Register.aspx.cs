@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
@@ -34,7 +34,7 @@ public partial class Register : Page
             string email = txtEmail.Text.Trim();
             
             // Check if email already exists
-            if (RelicEcommerce.DBHelper.RecordExists("Customer", "Email", email))
+            if (KalaSmriti.DBHelper.RecordExists("Customer", "Email", email))
             {
                 ShowError("This email is already registered. Please use a different email or login.");
                 return;
@@ -66,7 +66,7 @@ public partial class Register : Page
                 new SqlParameter("@Country", string.IsNullOrEmpty(txtCountry.Text) ? "Nepal" : txtCountry.Text.Trim())
             };
 
-            int result = RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            int result = KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
 
             if (result > 0)
             {
@@ -120,3 +120,4 @@ public partial class Register : Page
         chkTerms.Checked = false;
     }
 }
+

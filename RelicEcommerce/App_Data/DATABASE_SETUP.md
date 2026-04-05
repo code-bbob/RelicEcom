@@ -1,4 +1,4 @@
-# Database Setup Instructions
+﻿# Database Setup Instructions
 
 ## Quick Fix for Database Connection Errors
 
@@ -9,7 +9,7 @@ If you're seeing "Error fetching products" or "Can't login", follow these steps:
 1. Open PowerShell as Administrator
 2. Navigate to the App_Data directory:
    ```powershell
-   cd "d:\RelicEcom\RelicEcommerce\App_Data"
+   cd "d:\KalaSmriti\KalaSmriti\App_Data"
    ```
 
 3. Run the setup script:
@@ -19,7 +19,7 @@ If you're seeing "Error fetching products" or "Can't login", follow these steps:
 
 4. The script will:
    - Detect available SQL Server instances
-   - Create the RelicDB database
+   - Create the KalaSmritiDB database
    - Create all tables
    - Insert sample data
    - Provide login credentials
@@ -46,22 +46,22 @@ In your `Web.config`, use one of these connection strings:
 
 **For SQL Server Express:**
 ```xml
-<add name="RelicConnectionString" 
-     connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=RelicDB;Integrated Security=True;Connect Timeout=30;Encrypt=False" 
+<add name="KalaSmritiConnectionString" 
+     connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=KalaSmritiDB;Integrated Security=True;Connect Timeout=30;Encrypt=False" 
      providerName="System.Data.SqlClient" />
 ```
 
 **For SQL Server (default instance):**
 ```xml
-<add name="RelicConnectionString" 
-     connectionString="Data Source=.;Initial Catalog=RelicDB;Integrated Security=True;Connect Timeout=30;Encrypt=False" 
+<add name="KalaSmritiConnectionString" 
+     connectionString="Data Source=.;Initial Catalog=KalaSmritiDB;Integrated Security=True;Connect Timeout=30;Encrypt=False" 
      providerName="System.Data.SqlClient" />
 ```
 
 **For LocalDB (development only):**
 ```xml
-<add name="RelicConnectionString" 
-     connectionString="Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=RelicDB;Integrated Security=True;Connect Timeout=30;Encrypt=False" 
+<add name="KalaSmritiConnectionString" 
+     connectionString="Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=KalaSmritiDB;Integrated Security=True;Connect Timeout=30;Encrypt=False" 
      providerName="System.Data.SqlClient" />
 ```
 
@@ -70,7 +70,7 @@ In your `Web.config`, use one of these connection strings:
 After setup, use these credentials:
 
 **Admin Account:**
-- Email: `admin@relic.com`
+- Email: `admin@kalasmriti.com`
 - Password: `Admin@123`
 
 **Test User Account:**
@@ -79,7 +79,7 @@ After setup, use these credentials:
 
 ### **Troubleshooting**
 
-**Error: "Cannot open database RelicDB"**
+**Error: "Cannot open database KalaSmritiDB"**
 - Solution: Run the SetupDatabase.ps1 script or create the database manually
 
 **Error: "Login failed for user"**
@@ -99,8 +99,8 @@ After setup, use these credentials:
 
 1. Open SQL Server Management Studio
 2. Connect to your SQL Server instance
-3. Expand "Databases" - you should see "RelicDB"
-4. Expand RelicDB > Tables - you should see:
+3. Expand "Databases" - you should see "KalaSmritiDB"
+4. Expand KalaSmritiDB > Tables - you should see:
    - Cart
    - Category
    - Customer
@@ -134,3 +134,4 @@ If you still encounter issues:
 2. Enable detailed SQL Server logging
 3. Verify your SQL Server service is running
 4. Ensure TCP/IP is enabled in SQL Server Configuration Manager
+

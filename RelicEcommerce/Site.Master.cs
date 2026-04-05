@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Security;
@@ -49,7 +49,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
             string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";
             SqlParameter[] customerParams = { new SqlParameter("@Email", email) };
             
-            object customerIdObj = RelicEcommerce.DBHelper.ExecuteScalar(customerQuery, customerParams);
+            object customerIdObj = KalaSmriti.DBHelper.ExecuteScalar(customerQuery, customerParams);
             
             if (customerIdObj != null)
             {
@@ -59,7 +59,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
                 string cartQuery = "SELECT ISNULL(SUM(Quantity), 0) FROM Cart WHERE CustomerID = @CustomerID";
                 SqlParameter[] cartParams = { new SqlParameter("@CustomerID", customerId) };
                 
-                int cartCount = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(cartQuery, cartParams));
+                int cartCount = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(cartQuery, cartParams));
                 lblCartCount.Text = cartCount.ToString();
             }
             else
@@ -89,7 +89,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
             
-            object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+            object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
             
             if (result != null)
             {
@@ -115,3 +115,4 @@ public partial class SiteMaster : System.Web.UI.MasterPage
         Response.Redirect("~/Default.aspx");
     }
 }
+

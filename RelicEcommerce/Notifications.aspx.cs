@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -33,7 +33,7 @@ public partial class Notifications : Page
     {
         try
         {
-            RelicEcommerce.NotificationService.MarkAllAsRead(customerId);
+            KalaSmriti.NotificationService.MarkAllAsRead(customerId);
             ShowMessage("All notifications marked as read.", false);
             LoadNotifications();
         }
@@ -48,13 +48,13 @@ public partial class Notifications : Page
         string email = HttpContext.Current.User.Identity.Name;
         string query = "SELECT CustomerID FROM Customer WHERE Email = @Email";
         SqlParameter[] parameters = { new SqlParameter("@Email", email) };
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
         return result == null ? 0 : Convert.ToInt32(result);
     }
 
     private void LoadNotifications()
     {
-        DataTable dt = RelicEcommerce.NotificationService.GetUserNotifications(customerId);
+        DataTable dt = KalaSmriti.NotificationService.GetUserNotifications(customerId);
         rptNotifications.DataSource = dt;
         rptNotifications.DataBind();
         pnlEmpty.Visible = dt.Rows.Count == 0;
@@ -69,3 +69,4 @@ public partial class Notifications : Page
             : "mb-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

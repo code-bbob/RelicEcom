@@ -1,4 +1,4 @@
-<%@ Page Title="Contact Us" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" %>
+﻿<%@ Page Title="Contact Us" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -98,7 +98,7 @@
                                 </div>
                                 <div>
                                     <h3 class="font-semibold text-lg text-gray-800 mb-1">Email</h3>
-                                    <p class="text-gray-600">info@relic.com<br/>support@relic.com</p>
+                                    <p class="text-gray-600">info@kalasmriti.com<br/>support@kalasmriti.com</p>
                                 </div>
                             </div>
 
@@ -182,3 +182,4 @@
         </div>
     </section>
 </asp:Content>
+

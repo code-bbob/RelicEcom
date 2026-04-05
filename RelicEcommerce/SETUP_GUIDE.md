@@ -1,4 +1,4 @@
-# Visual Studio Project Setup Guide
+﻿# Visual Studio Project Setup Guide
 
 ## Opening the Project in Visual Studio
 
@@ -9,12 +9,12 @@ Since this project was created as individual files, here's how to set it up in V
 1. **Open Visual Studio 2019/2022**
 
 2. **Create New Website**
-   - File → New → Web Site
-   - Or: File → Open → Web Site
+   - File â†’ New â†’ Web Site
+   - Or: File â†’ Open â†’ Web Site
 
 3. **Select ASP.NET Empty Web Site**
    - Choose "ASP.NET Empty Web Site" template
-   - Select location: `/home/bibhab/aashma/RelicEcommerce`
+   - Select location: `/home/bibhab/aashma/KalaSmriti`
    - Click OK
 
 4. **The project structure is already in place**
@@ -26,8 +26,8 @@ Since this project was created as individual files, here's how to set it up in V
 1. **Open Visual Studio**
 
 2. **Open Web Site**
-   - File → Open → Web Site
-   - Navigate to: `/home/bibhab/aashma/RelicEcommerce`
+   - File â†’ Open â†’ Web Site
+   - Navigate to: `/home/bibhab/aashma/KalaSmriti`
    - Click "Open"
 
 3. **Visual Studio will load all files automatically**
@@ -68,7 +68,7 @@ The following packages may need to be installed:
 
 1. **Build Solution**
    - Press `Ctrl+Shift+B`
-   - Or: Build → Build Web Site
+   - Or: Build â†’ Build Web Site
 
 2. **Run Application**
    - Press `F5` (with debugging)
@@ -84,12 +84,12 @@ The following packages may need to be installed:
 ### If you get compilation errors:
 
 1. **Check .NET Framework version**
-   - Right-click website → Property Pages
+   - Right-click website â†’ Property Pages
    - Ensure Target Framework is .NET Framework 4.8
 
 2. **Clean and Rebuild**
-   - Build → Clean Web Site
-   - Build → Build Web Site
+   - Build â†’ Clean Web Site
+   - Build â†’ Build Web Site
 
 3. **Check References**
    - Ensure System.Data and System.Data.SqlClient are referenced
@@ -112,39 +112,39 @@ The following packages may need to be installed:
 ## Project Structure in Solution Explorer
 
 ```
-RelicEcommerce/
-├── Admin/
-│   ├── Dashboard.aspx
-│   ├── ManageProducts.aspx
-│   ├── ManageCategories.aspx
-│   ├── ManageOrders.aspx
-│   └── ManageUsers.aspx
-├── App_Code/
-│   └── DBHelper.cs
-├── App_Data/
-│   ├── CreateDatabase.sql
-│   └── RelicDB.mdf (generated)
-├── CSS/
-│   └── custom.css
-├── Images/
-│   ├── products/
-│   └── categories/
-├── JS/
-│   └── site.js
-├── Default.aspx
-├── Login.aspx
-├── Register.aspx
-├── Shop.aspx
-├── ProductDetails.aspx
-├── Cart.aspx
-├── Checkout.aspx
-├── Orders.aspx
-├── Profile.aspx
-├── About.aspx
-├── Contact.aspx
-├── Site.Master
-├── Web.config
-└── README.md
+KalaSmriti/
+â”œâ”€â”€ Admin/
+â”‚   â”œâ”€â”€ Dashboard.aspx
+â”‚   â”œâ”€â”€ ManageProducts.aspx
+â”‚   â”œâ”€â”€ ManageCategories.aspx
+â”‚   â”œâ”€â”€ ManageOrders.aspx
+â”‚   â””â”€â”€ ManageUsers.aspx
+â”œâ”€â”€ App_Code/
+â”‚   â””â”€â”€ DBHelper.cs
+â”œâ”€â”€ App_Data/
+â”‚   â”œâ”€â”€ CreateDatabase.sql
+â”‚   â””â”€â”€ KalaSmritiDB.mdf (generated)
+â”œâ”€â”€ CSS/
+â”‚   â””â”€â”€ custom.css
+â”œâ”€â”€ Images/
+â”‚   â”œâ”€â”€ products/
+â”‚   â””â”€â”€ categories/
+â”œâ”€â”€ JS/
+â”‚   â””â”€â”€ site.js
+â”œâ”€â”€ Default.aspx
+â”œâ”€â”€ Login.aspx
+â”œâ”€â”€ Register.aspx
+â”œâ”€â”€ Shop.aspx
+â”œâ”€â”€ ProductDetails.aspx
+â”œâ”€â”€ Cart.aspx
+â”œâ”€â”€ Checkout.aspx
+â”œâ”€â”€ Orders.aspx
+â”œâ”€â”€ Profile.aspx
+â”œâ”€â”€ About.aspx
+â”œâ”€â”€ Contact.aspx
+â”œâ”€â”€ Site.Master
+â”œâ”€â”€ Web.config
+â””â”€â”€ README.md
 ```
 
 ## Testing the Application
@@ -157,7 +157,7 @@ RelicEcommerce/
 ### 2. Login with default credentials
 
 **Admin:**
-- Email: admin@relic.com
+- Email: admin@kalasmriti.com
 - Password: Admin@123
 
 **Customer:**
@@ -184,7 +184,7 @@ RelicEcommerce/
    - Uses App_Code folder for shared classes
 
 2. **Database is in App_Data**
-   - LocalDB database file: RelicDB.mdf
+   - LocalDB database file: KalaSmritiDB.mdf
    - Will be created on first run (after executing SQL script)
 
 3. **Tailwind CSS is loaded from CDN**
@@ -215,3 +215,4 @@ Check the main README.md for:
 ---
 
 **Happy Coding!**
+

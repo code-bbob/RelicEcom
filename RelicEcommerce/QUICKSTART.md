@@ -1,26 +1,26 @@
-# 🚀 Quick Start Guide - Relic E-Commerce
+﻿# ðŸš€ Quick Start Guide - KalaSmriti E-Commerce
 
-Get your Relic E-Commerce application up and running in minutes!
+Get your KalaSmriti E-Commerce application up and running in minutes!
 
 ---
 
-## ⚡ Fast Setup (3 Steps)
+## âš¡ Fast Setup (3 Steps)
 
 ### Step 1: Open in Visual Studio (1 minute)
 ```
 1. Launch Visual Studio 2019/2022
-2. File → Open → Web Site
-3. Select folder: /home/bibhab/aashma/RelicEcommerce
+2. File â†’ Open â†’ Web Site
+3. Select folder: /home/bibhab/aashma/KalaSmriti
 4. Click "Open"
 ```
 
 ### Step 2: Create Database (2 minutes)
 ```
 Option A - Using Visual Studio:
-1. View → SQL Server Object Explorer
+1. View â†’ SQL Server Object Explorer
 2. Connect to (LocalDB)\MSSQLLocalDB
-3. Right-click Databases → Add New Database → "RelicDB"
-4. Right-click RelicDB → New Query
+3. Right-click Databases â†’ Add New Database â†’ "KalaSmritiDB"
+4. Right-click KalaSmritiDB â†’ New Query
 5. Open and execute: App_Data/CreateDatabase.sql
 
 Option B - Using SQL Server Management Studio:
@@ -38,11 +38,11 @@ Option B - Using SQL Server Management Studio:
 
 ---
 
-## 🔑 Login Credentials
+## ðŸ”‘ Login Credentials
 
 ### Admin Account
 ```
-Email: admin@relic.com
+Email: admin@kalasmriti.com
 Password: Admin@123
 ```
 
@@ -54,7 +54,7 @@ Password: User@123
 
 ---
 
-## 🎯 Quick Test Checklist
+## ðŸŽ¯ Quick Test Checklist
 
 ### As a Customer:
 - [ ] Visit home page (Default.aspx)
@@ -74,43 +74,43 @@ Password: User@123
 
 ---
 
-## 📁 Project Structure at a Glance
+## ðŸ“ Project Structure at a Glance
 
 ```
-RelicEcommerce/
-├── 🏠 Default.aspx          → Home page
-├── 🛍️ Shop.aspx             → Product catalog
-├── 🔐 Login.aspx            → User login
-├── 📝 Register.aspx         → User registration
-├── 🛒 Cart.aspx             → Shopping cart
-├── 👤 Profile.aspx          → User profile
-│
-├── 👑 Admin/
-│   ├── Dashboard.aspx       → Admin dashboard
-│   ├── ManageProducts.aspx  → Product management
-│   ├── ManageOrders.aspx    → Order management
-│   └── ManageUsers.aspx     → User management
-│
-├── 💾 App_Data/
-│   └── CreateDatabase.sql   → Database setup script
-│
-├── 🎨 CSS/custom.css        → Custom styles
-├── ⚡ JS/site.js            → JavaScript functions
-├── 🖼️ Images/               → Image assets
-└── ⚙️ Web.config            → Configuration
+KalaSmriti/
+â”œâ”€â”€ ðŸ  Default.aspx          â†’ Home page
+â”œâ”€â”€ ðŸ›ï¸ Shop.aspx             â†’ Product catalog
+â”œâ”€â”€ ðŸ” Login.aspx            â†’ User login
+â”œâ”€â”€ ðŸ“ Register.aspx         â†’ User registration
+â”œâ”€â”€ ðŸ›’ Cart.aspx             â†’ Shopping cart
+â”œâ”€â”€ ðŸ‘¤ Profile.aspx          â†’ User profile
+â”‚
+â”œâ”€â”€ ðŸ‘‘ Admin/
+â”‚   â”œâ”€â”€ Dashboard.aspx       â†’ Admin dashboard
+â”‚   â”œâ”€â”€ ManageProducts.aspx  â†’ Product management
+â”‚   â”œâ”€â”€ ManageOrders.aspx    â†’ Order management
+â”‚   â””â”€â”€ ManageUsers.aspx     â†’ User management
+â”‚
+â”œâ”€â”€ ðŸ’¾ App_Data/
+â”‚   â””â”€â”€ CreateDatabase.sql   â†’ Database setup script
+â”‚
+â”œâ”€â”€ ðŸŽ¨ CSS/custom.css        â†’ Custom styles
+â”œâ”€â”€ âš¡ JS/site.js            â†’ JavaScript functions
+â”œâ”€â”€ ðŸ–¼ï¸ Images/               â†’ Image assets
+â””â”€â”€ âš™ï¸ Web.config            â†’ Configuration
 ```
 
 ---
 
-## 🔧 Common Issues & Quick Fixes
+## ðŸ”§ Common Issues & Quick Fixes
 
-### ❌ "Cannot open database"
+### âŒ "Cannot open database"
 **Fix:** Execute CreateDatabase.sql first
 
-### ❌ "Login page not found"
+### âŒ "Login page not found"
 **Fix:** Ensure you opened as Web Site (not project)
 
-### ❌ "Build errors"
+### âŒ "Build errors"
 **Fix:** 
 ```
 1. Right-click solution
@@ -118,12 +118,12 @@ RelicEcommerce/
 3. Build Web Site
 ```
 
-### ❌ "LocalDB not found"
+### âŒ "LocalDB not found"
 **Fix:** Install SQL Server Express with LocalDB from Microsoft
 
 ---
 
-## 📖 Key URLs (when running)
+## ðŸ“– Key URLs (when running)
 
 ```
 Home:           http://localhost:xxxxx/Default.aspx
@@ -137,7 +137,7 @@ Admin:          http://localhost:xxxxx/Admin/Dashboard.aspx
 
 ---
 
-## 🎨 Sample Data Included
+## ðŸŽ¨ Sample Data Included
 
 ### 6 Categories:
 - Traditional Paintings
@@ -158,42 +158,42 @@ Admin:          http://localhost:xxxxx/Admin/Dashboard.aspx
 - Dhaka Fabric (Rs. 3,500)
 
 ### 2 User Accounts:
-- 1 Admin (admin@relic.com)
+- 1 Admin (admin@kalasmriti.com)
 - 1 Customer (bibhab@gmail.com)
 
 ---
 
-## 🌟 Features to Test
+## ðŸŒŸ Features to Test
 
 ### Customer Journey:
-1. 🏠 Browse home page
-2. 🔍 Search/filter products
-3. 👀 View product details
-4. 🛒 Add to cart
-5. ✏️ Update cart quantities
-6. 💳 Proceed to checkout
+1. ðŸ  Browse home page
+2. ðŸ” Search/filter products
+3. ðŸ‘€ View product details
+4. ðŸ›’ Add to cart
+5. âœï¸ Update cart quantities
+6. ðŸ’³ Proceed to checkout
 
 ### Admin Journey:
-1. 📊 View dashboard stats
-2. 📦 Check product inventory
-3. 📋 Review orders
-4. 👥 Manage users
-5. ⚠️ Monitor low stock
+1. ðŸ“Š View dashboard stats
+2. ðŸ“¦ Check product inventory
+3. ðŸ“‹ Review orders
+4. ðŸ‘¥ Manage users
+5. âš ï¸ Monitor low stock
 
 ---
 
-## 📱 Responsive Design
+## ðŸ“± Responsive Design
 
 Test on different screen sizes:
-- 📱 Mobile: 320px - 767px
-- 📱 Tablet: 768px - 1023px
-- 💻 Desktop: 1024px+
+- ðŸ“± Mobile: 320px - 767px
+- ðŸ“± Tablet: 768px - 1023px
+- ðŸ’» Desktop: 1024px+
 
-Use browser DevTools (F12) → Toggle device toolbar
+Use browser DevTools (F12) â†’ Toggle device toolbar
 
 ---
 
-## 💡 Pro Tips
+## ðŸ’¡ Pro Tips
 
 1. **Use Chrome DevTools** to test responsive design
 2. **Check browser console** (F12) for any errors
@@ -203,7 +203,7 @@ Use browser DevTools (F12) → Toggle device toolbar
 
 ---
 
-## 📚 More Information
+## ðŸ“š More Information
 
 - **Full Documentation:** README.md
 - **Setup Details:** SETUP_GUIDE.md
@@ -211,21 +211,21 @@ Use browser DevTools (F12) → Toggle device toolbar
 
 ---
 
-## ✅ You're All Set!
+## âœ… You're All Set!
 
-Your Relic E-Commerce application is ready to demonstrate:
-- ✅ Mobile-responsive design
-- ✅ User authentication
-- ✅ Shopping cart functionality
-- ✅ Admin dashboard
-- ✅ Product management
-- ✅ Order tracking
+Your KalaSmriti E-Commerce application is ready to demonstrate:
+- âœ… Mobile-responsive design
+- âœ… User authentication
+- âœ… Shopping cart functionality
+- âœ… Admin dashboard
+- âœ… Product management
+- âœ… Order tracking
 
-**Happy Testing! 🎉**
+**Happy Testing! ðŸŽ‰**
 
 ---
 
-## 🆘 Need Help?
+## ðŸ†˜ Need Help?
 
 1. Check README.md for detailed documentation
 2. Review code comments for implementation details
@@ -236,4 +236,5 @@ Your Relic E-Commerce application is ready to demonstrate:
 
 **Version:** 1.0  
 **Last Updated:** February 20, 2026  
-**Status:** Production Ready ✅
+**Status:** Production Ready âœ…
+

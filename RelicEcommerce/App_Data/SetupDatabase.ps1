@@ -1,5 +1,5 @@
-# Relic E-Commerce Database Setup Script
-Write-Host "=== Relic E-Commerce Database Setup ===" -ForegroundColor Cyan
+# KalaSmriti E-Commerce Database Setup Script
+Write-Host "=== KalaSmriti E-Commerce Database Setup ===" -ForegroundColor Cyan
 Write-Host ""
 
 # Function to test SQL Server connection
@@ -60,9 +60,9 @@ $sqlScript = Get-Content $sqlFile -Raw
 Write-Host "Creating database..." -ForegroundColor Yellow
 try {
     $createDB = @'
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'RelicDB')
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'KalaSmritiDB')
 BEGIN
-    CREATE DATABASE RelicDB;
+    CREATE DATABASE KalaSmritiDB;
     PRINT 'Database created';
 END
 '@
@@ -84,7 +84,7 @@ catch {
 Write-Host "Creating tables..." -ForegroundColor Yellow
 try {
     # Use sqlcmd for reliable batch execution
-    $sqlcmdOutput = & sqlcmd -S $availableInstance -d RelicDB -i $sqlFile -b 2>&1
+    $sqlcmdOutput = & sqlcmd -S $availableInstance -d KalaSmritiDB -i $sqlFile -b 2>&1
     
     if ($LASTEXITCODE -eq 0) {
         Write-Host "Setup completed!" -ForegroundColor Green
@@ -93,7 +93,7 @@ try {
         Write-Host "Warning: Some commands may have failed" -ForegroundColor Yellow
         Write-Host "Verifying tables..." -ForegroundColor Gray
         
-        $connStr = "Server=$availableInstance;Database=RelicDB;Integrated Security=True;Encrypt=False"
+        $connStr = "Server=$availableInstance;Database=KalaSmritiDB;Integrated Security=True;Encrypt=False"
         $conn = New-Object System.Data.SqlClient.SqlConnection($connStr)
         $conn.Open()
         $cmd = New-Object System.Data.SqlClient.SqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", $conn)
@@ -119,24 +119,24 @@ catch {
 Write-Host ""
 Write-Host "=== Complete ===" -ForegroundColor Cyan
 Write-Host "Server: $availableInstance" -ForegroundColor White
-Write-Host "Database: RelicDB" -ForegroundColor White
+Write-Host "Database: KalaSmritiDB" -ForegroundColor White
 Write-Host ""
 Write-Host "Login credentials:" -ForegroundColor Yellow
-Write-Host "Admin: admin@relic.com / Admin@123" -ForegroundColor White
+Write-Host "Admin: admin@kalasmriti.com / Admin@123" -ForegroundColor White
 Write-Host "User:  bibhab@gmail.com / User@123" -ForegroundColor White
 Write-Host ""
 
 if ($availableInstance -eq ".\SQLEXPRESS") {
     Write-Host "Connection string:" -ForegroundColor Yellow
-    Write-Host "Data Source=.\SQLEXPRESS;Initial Catalog=RelicDB;Integrated Security=True;Encrypt=False" -ForegroundColor White
+    Write-Host "Data Source=.\SQLEXPRESS;Initial Catalog=KalaSmritiDB;Integrated Security=True;Encrypt=False" -ForegroundColor White
 }
 elseif ($availableInstance -eq "(LocalDB)\MSSQLLocalDB") {
     Write-Host "Connection string:" -ForegroundColor Yellow
-    Write-Host "Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=RelicDB;Integrated Security=True;Encrypt=False" -ForegroundColor White
+    Write-Host "Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=KalaSmritiDB;Integrated Security=True;Encrypt=False" -ForegroundColor White
 }
 else {
     Write-Host "Connection string:" -ForegroundColor Yellow
-    Write-Host "Data Source=.;Initial Catalog=RelicDB;Integrated Security=True;Encrypt=False" -ForegroundColor White
+    Write-Host "Data Source=.;Initial Catalog=KalaSmritiDB;Integrated Security=True;Encrypt=False" -ForegroundColor White
 }
 
 Write-Host ""

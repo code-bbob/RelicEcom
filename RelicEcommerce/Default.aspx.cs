@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
@@ -25,7 +25,7 @@ public partial class _Default : Page
         {
             System.Diagnostics.Debug.WriteLine("[Default] Loading categories...");
             string query = "SELECT TOP 6 CategoryID, CategoryName, ImageUrl FROM Category WHERE IsActive = 1 ORDER BY CategoryName";
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
             
             System.Diagnostics.Debug.WriteLine("[Default] Categories loaded: " + dt.Rows.Count);
             rptCategories.DataSource = dt;
@@ -53,7 +53,7 @@ public partial class _Default : Page
                         WHERE IsActive = 1 AND IsFeatured = 1 AND StockQuantity > 0
                         ORDER BY CreatedDate DESC";
             
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
             
             System.Diagnostics.Debug.WriteLine("[Default] Featured products loaded: " + dt.Rows.Count);
             rptFeaturedProducts.DataSource = dt;
@@ -85,7 +85,7 @@ public partial class _Default : Page
             // Get customer ID
             string customerQuery = "SELECT CustomerID FROM Customer WHERE Email = @Email";
             SqlParameter[] customerParams = { new SqlParameter("@Email", email) };
-            object customerIdObj = RelicEcommerce.DBHelper.ExecuteScalar(customerQuery, customerParams);
+            object customerIdObj = KalaSmriti.DBHelper.ExecuteScalar(customerQuery, customerParams);
 
             if (customerIdObj != null)
             {
@@ -98,7 +98,7 @@ public partial class _Default : Page
                     new SqlParameter("@ProductID", productId)
                 };
 
-                DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(checkQuery, checkParams);
+                DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(checkQuery, checkParams);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -110,7 +110,7 @@ public partial class _Default : Page
                         new SqlParameter("@CustomerID", customerId),
                         new SqlParameter("@ProductID", productId)
                     };
-                    RelicEcommerce.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
+                    KalaSmriti.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ public partial class _Default : Page
                         new SqlParameter("@CustomerID", customerId),
                         new SqlParameter("@ProductID", productId)
                     };
-                    RelicEcommerce.DBHelper.ExecuteNonQuery(insertQuery, insertParams);
+                    KalaSmriti.DBHelper.ExecuteNonQuery(insertQuery, insertParams);
                 }
 
                 // Show success message and refresh page
@@ -133,3 +133,4 @@ public partial class _Default : Page
         }
     }
 }
+

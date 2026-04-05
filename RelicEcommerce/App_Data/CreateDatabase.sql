@@ -1,5 +1,5 @@
--- Relic E-Commerce Database Schema
--- This script creates all tables for the Relic mobile e-commerce application
+﻿-- KalaSmriti E-Commerce Database Schema
+-- This script creates all tables for the KalaSmriti mobile e-commerce application
 -- Compatible with both SQL Server and LocalDB
 
 -- For LocalDB: Just run this script after connecting to the database
@@ -8,13 +8,13 @@
 USE master;
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'RelicDB')
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'KalaSmritiDB')
 BEGIN
-    CREATE DATABASE RelicDB;
+    CREATE DATABASE KalaSmritiDB;
 END
 GO
 
-USE RelicDB;
+USE KalaSmritiDB;
 GO
 */
 
@@ -208,7 +208,7 @@ GO
 
 -- Insert Sample Admin User (Password: Admin@123)
 INSERT INTO Customer (FirstName, LastName, Email, Password, Phone, IsAdmin, Address, City, State, ZipCode, Country) VALUES
-('Admin', 'User', 'admin@relic.com', 'Admin@123', '9841234567', 1, 'Thamel', 'Kathmandu', 'Bagmati', '44600', 'Nepal');
+('Admin', 'User', 'admin@kalasmriti.com', 'Admin@123', '9841234567', 1, 'Thamel', 'Kathmandu', 'Bagmati', '44600', 'Nepal');
 GO
 
 -- Insert Sample Customer (Password: User@123)
@@ -230,3 +230,4 @@ GO
 
 PRINT 'Database schema created successfully!';
 GO
+

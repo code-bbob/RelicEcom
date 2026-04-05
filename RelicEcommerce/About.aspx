@@ -1,4 +1,4 @@
-<%@ Page Title="About Us" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" %>
+﻿<%@ Page Title="About Us" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -7,7 +7,7 @@
     <!-- Hero Section -->
     <div class="bg-gradient-to-r from-amber-600 to-orange-700 text-white py-20">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-5xl font-bold mb-4">About Relic</h1>
+            <h1 class="text-5xl font-bold mb-4">About KalaSmriti</h1>
             <p class="text-xl text-amber-100">Celebrating Heritage, Preserving Culture</p>
         </div>
     </div>
@@ -19,7 +19,7 @@
                 <div>
                     <h2 class="text-4xl font-bold text-gray-800 mb-6">Our Story</h2>
                     <p class="text-gray-600 mb-4 leading-relaxed">
-                        Relic was born from a passion to preserve and celebrate the rich heritage of traditional craftsmanship. 
+                        KalaSmriti was born from a passion to preserve and celebrate the rich heritage of traditional craftsmanship. 
                         Founded in 2020, we set out on a mission to bridge the gap between skilled artisans and art enthusiasts 
                         who appreciate authentic, handmade products.
                     </p>
@@ -28,7 +28,7 @@
                         through generations, and the dedication of master craftspeople who pour their hearts into their work.
                     </p>
                     <p class="text-gray-600 leading-relaxed">
-                        Today, Relic has become a trusted platform connecting artisans with customers worldwide, ensuring that 
+                        Today, KalaSmriti has become a trusted platform connecting artisans with customers worldwide, ensuring that 
                         traditional art forms continue to thrive in the modern era.
                     </p>
                 </div>
@@ -130,7 +130,7 @@
     <!-- Team (Optional) -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Why Choose Relic?</h2>
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Why Choose KalaSmriti?</h2>
             <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
                 We're more than just an e-commerce platform. We're a community dedicated to preserving heritage.
             </p>
@@ -165,3 +165,4 @@
         </div>
     </section>
 </asp:Content>
+

@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
 
-namespace RelicEcommerce
+namespace KalaSmriti
 {
     public static class NotificationService
     {
@@ -105,7 +105,7 @@ ORDER BY CreatedDate DESC";
             {
                 using (MailMessage mail = new MailMessage())
                 {
-                    mail.From = new MailAddress(fromEmail, string.IsNullOrWhiteSpace(fromName) ? "Relic" : fromName);
+                    mail.From = new MailAddress(fromEmail, string.IsNullOrWhiteSpace(fromName) ? "KalaSmriti" : fromName);
                     mail.To.Add(email);
                     mail.Subject = subject;
                     mail.Body = body;
@@ -131,3 +131,4 @@ ORDER BY CreatedDate DESC";
         }
     }
 }
+

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -34,7 +34,7 @@ public partial class Admin_ManageOrders : Page
             string email = HttpContext.Current.User.Identity.Name;
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
-            object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+            object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
             return result != null && Convert.ToBoolean(result);
         }
         catch
@@ -49,7 +49,7 @@ public partial class Admin_ManageOrders : Page
                          FROM [Order] o
                          INNER JOIN Customer c ON o.CustomerID = c.CustomerID
                          ORDER BY o.OrderDate DESC";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
         gvOrders.DataSource = dt;
         gvOrders.DataBind();
     }
@@ -119,14 +119,14 @@ public partial class Admin_ManageOrders : Page
                 new SqlParameter("@OrderID", orderId)
             };
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
 
             int customerId = GetOrderCustomerId(orderId);
             if (customerId > 0)
             {
                 string email = GetCustomerEmail(customerId);
                 string message = "Order #" + orderId + " updated. Status: " + ddlOrderStatus.SelectedValue + ", Payment: " + ddlPaymentStatus.SelectedValue + ".";
-                RelicEcommerce.NotificationService.SendOrderNotification(customerId, email, "Order status updated", message);
+                KalaSmriti.NotificationService.SendOrderNotification(customerId, email, "Order status updated", message);
             }
 
             ShowMessage("Order updated successfully.", false);
@@ -141,14 +141,14 @@ public partial class Admin_ManageOrders : Page
     private int GetOrderCustomerId(int orderId)
     {
         string query = "SELECT CustomerID FROM [Order] WHERE OrderID = @OrderID";
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@OrderID", orderId) });
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@OrderID", orderId) });
         return result == null ? 0 : Convert.ToInt32(result);
     }
 
     private string GetCustomerEmail(int customerId)
     {
         string query = "SELECT Email FROM Customer WHERE CustomerID = @CustomerID";
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@CustomerID", customerId) });
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@CustomerID", customerId) });
         return result == null ? string.Empty : result.ToString();
     }
 
@@ -161,3 +161,4 @@ public partial class Admin_ManageOrders : Page
             : "mb-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

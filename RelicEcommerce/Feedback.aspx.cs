@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -75,7 +75,7 @@ public partial class Feedback : Page
     {
         string email = HttpContext.Current.User.Identity.Name;
         string query = "SELECT CustomerID FROM Customer WHERE Email = @Email";
-        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@Email", email) });
+        object result = KalaSmriti.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@Email", email) });
         return result == null ? 0 : Convert.ToInt32(result);
     }
 
@@ -87,7 +87,7 @@ WHERE OrderID = @OrderID
   AND CustomerID = @CustomerID
   AND OrderStatus = 'Delivered'";
 
-        int count = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(query, new[] {
+        int count = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(query, new[] {
             new SqlParameter("@OrderID", orderId),
             new SqlParameter("@CustomerID", customerId)
         }));
@@ -106,7 +106,7 @@ LEFT JOIN Review r ON r.ProductID = oi.ProductID AND r.CustomerID = @CustomerID
 WHERE oi.OrderID = @OrderID
 ORDER BY p.ProductName";
 
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] {
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] {
             new SqlParameter("@OrderID", orderId),
             new SqlParameter("@CustomerID", customerId)
         });
@@ -170,7 +170,7 @@ ORDER BY p.ProductName";
             string reviewText = txtReview.Text.Trim();
 
             string existsQuery = "SELECT COUNT(*) FROM Review WHERE ProductID = @ProductID AND CustomerID = @CustomerID";
-            int exists = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(existsQuery, new[] {
+            int exists = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(existsQuery, new[] {
                 new SqlParameter("@ProductID", productId),
                 new SqlParameter("@CustomerID", customerId)
             }));
@@ -184,7 +184,7 @@ SET Rating = @Rating,
     IsApproved = 1
 WHERE ProductID = @ProductID AND CustomerID = @CustomerID";
 
-                RelicEcommerce.DBHelper.ExecuteNonQuery(update, new[] {
+                KalaSmriti.DBHelper.ExecuteNonQuery(update, new[] {
                     new SqlParameter("@Rating", rating),
                     new SqlParameter("@ReviewText", reviewText),
                     new SqlParameter("@ProductID", productId),
@@ -196,7 +196,7 @@ WHERE ProductID = @ProductID AND CustomerID = @CustomerID";
                 string insert = @"INSERT INTO Review (ProductID, CustomerID, Rating, ReviewText, ReviewDate, IsApproved)
 VALUES (@ProductID, @CustomerID, @Rating, @ReviewText, GETDATE(), 1)";
 
-                RelicEcommerce.DBHelper.ExecuteNonQuery(insert, new[] {
+                KalaSmriti.DBHelper.ExecuteNonQuery(insert, new[] {
                     new SqlParameter("@ProductID", productId),
                     new SqlParameter("@CustomerID", customerId),
                     new SqlParameter("@Rating", rating),
@@ -221,7 +221,7 @@ VALUES (@ProductID, @CustomerID, @Rating, @ReviewText, GETDATE(), 1)";
         string comment = txtTransactionComment.Text.Trim();
 
         string existsQuery = "SELECT COUNT(*) FROM OrderFeedback WHERE OrderID = @OrderID AND CustomerID = @CustomerID";
-        int exists = Convert.ToInt32(RelicEcommerce.DBHelper.ExecuteScalar(existsQuery, new[] {
+        int exists = Convert.ToInt32(KalaSmriti.DBHelper.ExecuteScalar(existsQuery, new[] {
             new SqlParameter("@OrderID", orderId),
             new SqlParameter("@CustomerID", customerId)
         }));
@@ -234,7 +234,7 @@ SET Rating = @Rating,
     FeedbackDate = GETDATE()
 WHERE OrderID = @OrderID AND CustomerID = @CustomerID";
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(update, new[] {
+            KalaSmriti.DBHelper.ExecuteNonQuery(update, new[] {
                 new SqlParameter("@Rating", rating),
                 new SqlParameter("@FeedbackText", comment),
                 new SqlParameter("@OrderID", orderId),
@@ -246,7 +246,7 @@ WHERE OrderID = @OrderID AND CustomerID = @CustomerID";
             string insert = @"INSERT INTO OrderFeedback (OrderID, CustomerID, Rating, FeedbackText, FeedbackDate)
 VALUES (@OrderID, @CustomerID, @Rating, @FeedbackText, GETDATE())";
 
-            RelicEcommerce.DBHelper.ExecuteNonQuery(insert, new[] {
+            KalaSmriti.DBHelper.ExecuteNonQuery(insert, new[] {
                 new SqlParameter("@OrderID", orderId),
                 new SqlParameter("@CustomerID", customerId),
                 new SqlParameter("@Rating", rating),
@@ -260,7 +260,7 @@ VALUES (@OrderID, @CustomerID, @Rating, @FeedbackText, GETDATE())";
     private void LoadExistingTransactionFeedback()
     {
         string query = "SELECT Rating, FeedbackText FROM OrderFeedback WHERE OrderID = @OrderID AND CustomerID = @CustomerID";
-        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] {
+        DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, new[] {
             new SqlParameter("@OrderID", orderId),
             new SqlParameter("@CustomerID", customerId)
         });
@@ -299,7 +299,7 @@ BEGIN
     );
 END";
 
-        RelicEcommerce.DBHelper.ExecuteNonQuery(query);
+        KalaSmriti.DBHelper.ExecuteNonQuery(query);
     }
 
     private void ShowMessage(string message, bool isError)
@@ -311,3 +311,4 @@ END";
             : "mb-4 p-3 rounded-lg bg-green-100 text-green-700";
     }
 }
+

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Web.UI;
 
@@ -19,20 +19,20 @@ public partial class Test : Page
             lblResult.Text = "Testing connection...<br/>";
             
             // Test connection
-            using (var conn = RelicEcommerce.DBHelper.GetConnection())
+            using (var conn = KalaSmriti.DBHelper.GetConnection())
             {
                 conn.Open();
-                lblResult.Text += "✓ Connection opened successfully<br/>";
+                lblResult.Text += "âœ“ Connection opened successfully<br/>";
                 conn.Close();
             }
             
-            lblResult.Text += "✓ Connection closed successfully<br/><br/>";
+            lblResult.Text += "âœ“ Connection closed successfully<br/><br/>";
             
             // Test query
             lblResult.Text += "Fetching products...<br/>";
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery("SELECT TOP 5 ProductID, ProductName, Price FROM Product");
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery("SELECT TOP 5 ProductID, ProductName, Price FROM Product");
             
-            lblResult.Text += "✓ Query executed successfully<br/>";
+            lblResult.Text += "âœ“ Query executed successfully<br/>";
             lblResult.Text += "Products found: " + dt.Rows.Count + "<br/><br/>";
             
             gvProducts.DataSource = dt;
@@ -48,3 +48,4 @@ public partial class Test : Page
         }
     }
 }
+

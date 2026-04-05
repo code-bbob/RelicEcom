@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
@@ -38,7 +38,7 @@ public partial class Admin_Dashboard : Page
             string query = "SELECT IsAdmin FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
             
-            object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+            object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
             
             if (result != null)
             {
@@ -72,19 +72,19 @@ public partial class Admin_Dashboard : Page
         {
             // Total Products
             string productQuery = "SELECT COUNT(*) FROM Product WHERE IsActive = 1";
-            lblTotalProducts.Text = RelicEcommerce.DBHelper.ExecuteScalar(productQuery, null).ToString();
+            lblTotalProducts.Text = KalaSmriti.DBHelper.ExecuteScalar(productQuery, null).ToString();
 
             // Total Orders
             string orderQuery = "SELECT COUNT(*) FROM [Order]";
-            lblTotalOrders.Text = RelicEcommerce.DBHelper.ExecuteScalar(orderQuery, null).ToString();
+            lblTotalOrders.Text = KalaSmriti.DBHelper.ExecuteScalar(orderQuery, null).ToString();
 
             // Total Users (non-admin)
             string userQuery = "SELECT COUNT(*) FROM Customer WHERE IsAdmin = 0";
-            lblTotalUsers.Text = RelicEcommerce.DBHelper.ExecuteScalar(userQuery, null).ToString();
+            lblTotalUsers.Text = KalaSmriti.DBHelper.ExecuteScalar(userQuery, null).ToString();
 
             // Total Revenue (delivered orders only)
             string revenueQuery = "SELECT ISNULL(SUM(TotalAmount), 0) FROM [Order] WHERE OrderStatus = 'Delivered'";
-            object revenue = RelicEcommerce.DBHelper.ExecuteScalar(revenueQuery, null);
+            object revenue = KalaSmriti.DBHelper.ExecuteScalar(revenueQuery, null);
             lblTotalRevenue.Text = String.Format("{0:N2}", revenue);
         }
         catch (Exception ex)
@@ -110,7 +110,7 @@ public partial class Admin_Dashboard : Page
                            INNER JOIN Customer c ON o.CustomerID = c.CustomerID
                            ORDER BY o.OrderDate DESC";
 
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
             gvRecentOrders.DataSource = dt;
             gvRecentOrders.DataBind();
         }
@@ -136,7 +136,7 @@ public partial class Admin_Dashboard : Page
                            WHERE p.IsActive = 1 AND p.StockQuantity <= 5
                            ORDER BY p.StockQuantity ASC";
 
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query);
             gvLowStock.DataSource = dt;
             gvLowStock.DataBind();
         }
@@ -146,3 +146,4 @@ public partial class Admin_Dashboard : Page
         }
     }
 }
+

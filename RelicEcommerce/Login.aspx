@@ -1,4 +1,4 @@
-<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
+﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -13,7 +13,7 @@
                     Welcome Back
                 </h2>
                 <p class="mt-2 text-sm text-gray-600">
-                    Sign in to your Relic account
+                    Sign in to your KalaSmriti account
                 </p>
             </div>
 
@@ -117,3 +117,4 @@
         </div>
     </div>
 </asp:Content>
+

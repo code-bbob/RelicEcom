@@ -1,4 +1,4 @@
-<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Register" %>
+﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Register" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -13,7 +13,7 @@
                     Create Account
                 </h2>
                 <p class="mt-2 text-sm text-gray-600">
-                    Join Relic and explore heritage art
+                    Join KalaSmriti and explore heritage art
                 </p>
             </div>
 
@@ -251,3 +251,4 @@
         }
     </script>
 </asp:Content>
+

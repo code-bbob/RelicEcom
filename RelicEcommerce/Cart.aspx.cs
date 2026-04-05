@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
@@ -36,7 +36,7 @@ public partial class Cart : Page
             string query = "SELECT CustomerID FROM Customer WHERE Email = @Email";
             SqlParameter[] parameters = { new SqlParameter("@Email", email) };
             
-            object result = RelicEcommerce.DBHelper.ExecuteScalar(query, parameters);
+            object result = KalaSmriti.DBHelper.ExecuteScalar(query, parameters);
             if (result != null)
             {
                 customerId = Convert.ToInt32(result);
@@ -73,7 +73,7 @@ public partial class Cart : Page
                            ORDER BY c.AddedDate DESC";
 
             SqlParameter[] parameters = { new SqlParameter("@CustomerID", customerId) };
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
 
             if (dt.Rows.Count > 0)
             {
@@ -115,7 +115,7 @@ public partial class Cart : Page
                              ORDER BY OrderDate DESC";
 
             SqlParameter[] parameters = { new SqlParameter("@CustomerID", customerId) };
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(query, parameters);
 
             rptPurchaseHistory.DataSource = dt;
             rptPurchaseHistory.DataBind();
@@ -167,7 +167,7 @@ public partial class Cart : Page
                               INNER JOIN Product p ON c.ProductID = p.ProductID 
                               WHERE c.CartID = @CartID";
             SqlParameter[] getParams = { new SqlParameter("@CartID", cartId) };
-            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(getQuery, getParams);
+            DataTable dt = KalaSmriti.DBHelper.ExecuteQuery(getQuery, getParams);
 
             if (dt.Rows.Count > 0)
             {
@@ -182,7 +182,7 @@ public partial class Cart : Page
                         new SqlParameter("@Quantity", newQty),
                         new SqlParameter("@CartID", cartId)
                     };
-                    RelicEcommerce.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
+                    KalaSmriti.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
                 }
                 else if (newQty <= 0)
                 {
@@ -223,7 +223,7 @@ public partial class Cart : Page
     {
         string query = "DELETE FROM Cart WHERE CartID = @CartID";
         SqlParameter[] parameters = { new SqlParameter("@CartID", cartId) };
-        RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+        KalaSmriti.DBHelper.ExecuteNonQuery(query, parameters);
     }
 
     /// <summary>
@@ -234,3 +234,4 @@ public partial class Cart : Page
         Response.Redirect("~/Checkout.aspx");
     }
 }
+
