@@ -26,10 +26,10 @@
                             <ItemTemplate>
                                 <asp:DropDownList ID="ddlOrderStatus" runat="server" CssClass="px-2 py-1 border border-gray-300 rounded">
                                     <asp:ListItem Value="Pending" Text="Pending"></asp:ListItem>
-                                    <asp:ListItem Value="Processing" Text="Processing"></asp:ListItem>
-                                    <asp:ListItem Value="Shipped" Text="Shipped"></asp:ListItem>
+                                    <asp:ListItem Value="Confirmed" Text="Confirmed"></asp:ListItem>
+                                    <asp:ListItem Value="Out for Delivery" Text="Out for Delivery"></asp:ListItem>
                                     <asp:ListItem Value="Delivered" Text="Delivered"></asp:ListItem>
-                                    <asp:ListItem Value="Cancelled" Text="Cancelled"></asp:ListItem>
+                                    <asp:ListItem Value="Canceled" Text="Canceled"></asp:ListItem>
                                 </asp:DropDownList>
                                 <asp:HiddenField ID="hfOrderStatus" runat="server" Value='<%# Eval("OrderStatus") %>' />
                             </ItemTemplate>

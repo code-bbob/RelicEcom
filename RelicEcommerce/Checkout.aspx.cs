@@ -86,18 +86,21 @@ public partial class Checkout : Page
                 ? "ORD-" + Guid.NewGuid().ToString("N").Substring(0, 12).ToUpperInvariant()
                 : null;
 
-            int orderId = CreateOrder(customerId, total, selectedPaymentMethod == "COD" ? "Paid" : "Pending");
+            int orderId = CreateOrder(customerId, total, "Pending");
             CreateOrderItems(orderId, cartItems);
-            CreatePaymentRecord(orderId, selectedPaymentMethod, total, selectedPaymentMethod == "COD" ? "Paid" : "Pending", transactionUuid);
+            CreatePaymentRecord(orderId, selectedPaymentMethod, total, "Pending", transactionUuid);
 
             if (selectedPaymentMethod == "COD")
             {
                 UpdateStockFromOrder(orderId);
                 ClearCart(customerId);
+                SendOrderNotificationSafe(customerId, orderId, "Order placed successfully", "Your Cash on Delivery order has been placed and payment is pending until delivery.");
                 ShowMessage("Order placed successfully. You can view it in My Orders.", false);
                 LoadCartSummary();
                 return;
             }
+
+            SendOrderNotificationSafe(customerId, orderId, "eSewa payment initiated", "Your order was created. Complete eSewa payment to confirm your order.");
 
             RedirectToEsewa(orderId, transactionUuid, total);
         }
@@ -292,6 +295,7 @@ public partial class Checkout : Page
         {
             Session.Remove("EsewaPendingOrderId");
             MarkPaymentFailed(orderId, "Payment canceled/failed at eSewa.");
+            SendOrderNotificationSafe(GetCustomerIdFromOrder(orderId), orderId, "Payment failed", "Your eSewa payment was canceled or failed. You can retry from checkout.");
             ShowMessage("Payment was canceled or failed. You can retry from checkout.", true);
             return;
         }
@@ -355,13 +359,58 @@ public partial class Checkout : Page
             MarkPaymentSuccess(orderId, string.IsNullOrWhiteSpace(callbackData.transaction_code) ? paymentContext.TransactionId : callbackData.transaction_code);
             UpdateStockFromOrder(orderId);
             ClearCart(paymentContext.CustomerId);
+            SendOrderNotificationSafe(paymentContext.CustomerId, orderId, "Payment successful", "Your eSewa payment was successful and your order is now confirmed.");
             ShowMessage("eSewa payment successful. Your order has been confirmed.", false);
         }
         catch (Exception ex)
         {
             Session.Remove("EsewaPendingOrderId");
             MarkPaymentFailed(orderId, "Exception during verification: " + ex.Message);
+            SendOrderNotificationSafe(GetCustomerIdFromOrder(orderId), orderId, "Payment verification issue", "We could not verify your eSewa payment automatically. Please contact support with your order number.");
             ShowMessage("Unable to verify eSewa payment: " + ex.Message, true);
+        }
+    }
+
+    private int GetCustomerIdFromOrder(int orderId)
+    {
+        if (orderId <= 0)
+        {
+            return 0;
+        }
+
+        string query = "SELECT CustomerID FROM [Order] WHERE OrderID = @OrderID";
+        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@OrderID", orderId) });
+        return result == null ? 0 : Convert.ToInt32(result);
+    }
+
+    private string GetCustomerEmailById(int localCustomerId)
+    {
+        if (localCustomerId <= 0)
+        {
+            return string.Empty;
+        }
+
+        string query = "SELECT Email FROM Customer WHERE CustomerID = @CustomerID";
+        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@CustomerID", localCustomerId) });
+        return result == null ? string.Empty : result.ToString();
+    }
+
+    private void SendOrderNotificationSafe(int localCustomerId, int orderId, string title, string body)
+    {
+        if (localCustomerId <= 0)
+        {
+            return;
+        }
+
+        try
+        {
+            string email = GetCustomerEmailById(localCustomerId);
+            string fullBody = "Order #" + orderId + ": " + body;
+            RelicEcommerce.NotificationService.SendOrderNotification(localCustomerId, email, title, fullBody);
+        }
+        catch
+        {
+            // Do not block checkout flow for notification failures.
         }
     }
 

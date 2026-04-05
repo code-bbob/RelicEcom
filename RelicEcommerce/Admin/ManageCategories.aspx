@@ -17,6 +17,8 @@
                     <asp:Label ID="lblMessage" runat="server"></asp:Label>
                 </asp:Panel>
 
+                <asp:HiddenField ID="hfEditingCategoryId" runat="server" Value="" />
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Category Name</label>
@@ -36,6 +38,10 @@
                     <asp:CheckBox ID="chkCategoryActive" runat="server" Text="Active" Checked="true" CssClass="text-gray-700" />
                     <asp:Button ID="btnAddCategory" runat="server" Text="Add Category" OnClick="btnAddCategory_Click"
                         CssClass="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition font-semibold" />
+                    <asp:Button ID="btnUpdateCategory" runat="server" Text="Update Category" OnClick="btnUpdateCategory_Click" Visible="false"
+                        CssClass="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-semibold" />
+                    <asp:Button ID="btnCancelCategoryEdit" runat="server" Text="Cancel" OnClick="btnCancelCategoryEdit_Click" Visible="false"
+                        CssClass="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition font-semibold" />
                 </div>
             </div>
 
@@ -50,6 +56,7 @@
                         <asp:BoundField DataField="CreatedDate" HeaderText="Created" DataFormatString="{0:yyyy-MM-dd}" />
                         <asp:TemplateField HeaderText="Actions">
                             <ItemTemplate>
+                                <asp:LinkButton ID="btnEdit" runat="server" CommandName="EditCategory" CommandArgument='<%# Container.DataItemIndex %>' CssClass="text-indigo-600 hover:text-indigo-800 mr-3">Edit</asp:LinkButton>
                                 <asp:LinkButton ID="btnToggle" runat="server" CommandName="ToggleActive" CommandArgument='<%# Container.DataItemIndex %>' CssClass="text-blue-600 hover:text-blue-800 mr-3">Toggle Active</asp:LinkButton>
                                 <asp:LinkButton ID="btnDelete" runat="server" CommandName="DeleteCategory" CommandArgument='<%# Container.DataItemIndex %>' CssClass="text-red-600 hover:text-red-800">Delete</asp:LinkButton>
                             </ItemTemplate>

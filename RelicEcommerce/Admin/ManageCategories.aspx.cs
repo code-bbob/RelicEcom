@@ -94,13 +94,74 @@ public partial class Admin_ManageCategories : Page
         }
     }
 
+    protected void btnUpdateCategory_Click(object sender, EventArgs e)
+    {
+        int categoryId;
+        if (!int.TryParse(hfEditingCategoryId.Value, out categoryId) || categoryId <= 0)
+        {
+            ShowMessage("No category selected for update.", true);
+            return;
+        }
+
+        try
+        {
+            string categoryName = txtCategoryName.Text.Trim();
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                ShowMessage("Category name is required.", true);
+                return;
+            }
+
+            string imageUrl = txtImageUrl.Text.Trim();
+            if (string.IsNullOrEmpty(imageUrl))
+            {
+                imageUrl = "/Images/placeholder.jpg";
+            }
+
+            string query = @"UPDATE Category
+                             SET CategoryName = @CategoryName,
+                                 Description = @Description,
+                                 ImageUrl = @ImageUrl,
+                                 IsActive = @IsActive
+                             WHERE CategoryID = @CategoryID";
+
+            SqlParameter[] parameters = {
+                new SqlParameter("@CategoryName", categoryName),
+                new SqlParameter("@Description", txtDescription.Text.Trim()),
+                new SqlParameter("@ImageUrl", imageUrl),
+                new SqlParameter("@IsActive", chkCategoryActive.Checked),
+                new SqlParameter("@CategoryID", categoryId)
+            };
+
+            RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+            ExitEditMode();
+            LoadCategories();
+            ShowMessage("Category updated successfully.", false);
+        }
+        catch (Exception ex)
+        {
+            ShowMessage("Unable to update category: " + ex.Message, true);
+        }
+    }
+
+    protected void btnCancelCategoryEdit_Click(object sender, EventArgs e)
+    {
+        ExitEditMode();
+    }
+
     protected void gvCategories_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if (e.CommandName != "ToggleActive" && e.CommandName != "DeleteCategory")
+        if (e.CommandName != "ToggleActive" && e.CommandName != "DeleteCategory" && e.CommandName != "EditCategory")
             return;
 
         int rowIndex = Convert.ToInt32(e.CommandArgument);
         int categoryId = Convert.ToInt32(gvCategories.DataKeys[rowIndex].Value);
+
+        if (e.CommandName == "EditCategory")
+        {
+            BeginEdit(categoryId);
+            return;
+        }
 
         try
         {
@@ -135,6 +196,41 @@ public partial class Admin_ManageCategories : Page
         {
             ShowMessage("Operation failed: " + ex.Message, true);
         }
+    }
+
+    private void BeginEdit(int categoryId)
+    {
+        string query = "SELECT CategoryID, CategoryName, Description, ImageUrl, IsActive FROM Category WHERE CategoryID = @CategoryID";
+        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@CategoryID", categoryId) });
+        if (dt.Rows.Count == 0)
+        {
+            ShowMessage("Category not found.", true);
+            return;
+        }
+
+        DataRow row = dt.Rows[0];
+        hfEditingCategoryId.Value = row["CategoryID"].ToString();
+        txtCategoryName.Text = row["CategoryName"].ToString();
+        txtDescription.Text = row["Description"] == DBNull.Value ? string.Empty : row["Description"].ToString();
+        txtImageUrl.Text = row["ImageUrl"] == DBNull.Value ? string.Empty : row["ImageUrl"].ToString();
+        chkCategoryActive.Checked = Convert.ToBoolean(row["IsActive"]);
+
+        btnAddCategory.Visible = false;
+        btnUpdateCategory.Visible = true;
+        btnCancelCategoryEdit.Visible = true;
+    }
+
+    private void ExitEditMode()
+    {
+        hfEditingCategoryId.Value = string.Empty;
+        txtCategoryName.Text = string.Empty;
+        txtDescription.Text = string.Empty;
+        txtImageUrl.Text = string.Empty;
+        chkCategoryActive.Checked = true;
+
+        btnAddCategory.Visible = true;
+        btnUpdateCategory.Visible = false;
+        btnCancelCategoryEdit.Visible = false;
     }
 
     private void ShowMessage(string message, bool isError)

@@ -127,6 +127,30 @@
                     </div>
                 </div>
             </asp:Panel>
+
+            <asp:Panel ID="pnlPurchaseHistory" runat="server" Visible="false" CssClass="mt-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Recent Purchases</h2>
+                        <a href="Orders.aspx" class="text-amber-600 hover:text-amber-700 font-medium">View All</a>
+                    </div>
+
+                    <asp:Repeater ID="rptPurchaseHistory" runat="server">
+                        <ItemTemplate>
+                            <div class="flex items-center justify-between border-b border-gray-200 py-3 last:border-b-0">
+                                <div>
+                                    <p class="font-semibold text-gray-800">Order #<%# Eval("OrderID") %></p>
+                                    <p class="text-sm text-gray-500"><%# String.Format("{0:yyyy-MM-dd}", Eval("OrderDate")) %></p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-semibold text-gray-800">Rs. <%# String.Format("{0:N2}", Eval("TotalAmount")) %></p>
+                                    <p class="text-sm text-gray-500"><%# Eval("OrderStatus") %></p>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </asp:Panel>
         </div>
     </div>
 </asp:Content>

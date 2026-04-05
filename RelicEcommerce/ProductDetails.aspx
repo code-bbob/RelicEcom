@@ -40,6 +40,14 @@
                             <asp:Label ID="lblStock" runat="server" CssClass="ml-2"></asp:Label>
                         </p>
 
+                        <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold text-gray-700">Customer Ratings</span>
+                                <asp:Label ID="lblRatingSummary" runat="server" CssClass="text-sm text-gray-600"></asp:Label>
+                            </div>
+                            <asp:Label ID="lblAverageRating" runat="server" CssClass="text-amber-600 font-semibold"></asp:Label>
+                        </div>
+
                         <div class="flex gap-3">
                             <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart" OnClick="btnAddToCart_Click"
                                 CssClass="bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition font-semibold" />
@@ -50,6 +58,27 @@
                             <asp:Label ID="lblMessage" runat="server"></asp:Label>
                         </asp:Panel>
                     </div>
+                </div>
+
+                <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Customer Reviews</h2>
+                    <asp:Repeater ID="rptReviews" runat="server">
+                        <ItemTemplate>
+                            <div class="border-b border-gray-200 py-4 last:border-b-0">
+                                <div class="flex items-center justify-between mb-1">
+                                    <div class="text-amber-500 text-sm">
+                                        <%# GetStars(Convert.ToInt32(Eval("Rating"))) %>
+                                    </div>
+                                    <span class="text-xs text-gray-500"><%# string.Format("{0:yyyy-MM-dd}", Eval("ReviewDate")) %></span>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-700 mb-1"><%# Eval("FirstName") %></p>
+                                <p class="text-gray-700"><%# Eval("ReviewText") %></p>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                    <asp:Panel ID="pnlNoReviews" runat="server" Visible="false" CssClass="text-gray-500 text-sm">
+                        No reviews yet for this product.
+                    </asp:Panel>
                 </div>
             </asp:Panel>
         </div>

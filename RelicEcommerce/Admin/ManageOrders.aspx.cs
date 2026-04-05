@@ -66,7 +66,18 @@ public partial class Admin_ManageOrders : Page
 
         if (ddlOrderStatus != null && hfOrderStatus != null)
         {
-            ListItem orderStatusItem = ddlOrderStatus.Items.FindByValue(hfOrderStatus.Value);
+            string normalizedStatus = hfOrderStatus.Value;
+            if (string.Equals(normalizedStatus, "Shipped", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(normalizedStatus, "Processing", StringComparison.OrdinalIgnoreCase))
+            {
+                normalizedStatus = "Out for Delivery";
+            }
+            else if (string.Equals(normalizedStatus, "Cancelled", StringComparison.OrdinalIgnoreCase))
+            {
+                normalizedStatus = "Canceled";
+            }
+
+            ListItem orderStatusItem = ddlOrderStatus.Items.FindByValue(normalizedStatus);
             if (orderStatusItem != null)
             {
                 ddlOrderStatus.ClearSelection();
@@ -109,6 +120,15 @@ public partial class Admin_ManageOrders : Page
             };
 
             RelicEcommerce.DBHelper.ExecuteNonQuery(query, parameters);
+
+            int customerId = GetOrderCustomerId(orderId);
+            if (customerId > 0)
+            {
+                string email = GetCustomerEmail(customerId);
+                string message = "Order #" + orderId + " updated. Status: " + ddlOrderStatus.SelectedValue + ", Payment: " + ddlPaymentStatus.SelectedValue + ".";
+                RelicEcommerce.NotificationService.SendOrderNotification(customerId, email, "Order status updated", message);
+            }
+
             ShowMessage("Order updated successfully.", false);
             LoadOrders();
         }
@@ -116,6 +136,20 @@ public partial class Admin_ManageOrders : Page
         {
             ShowMessage("Unable to update order: " + ex.Message, true);
         }
+    }
+
+    private int GetOrderCustomerId(int orderId)
+    {
+        string query = "SELECT CustomerID FROM [Order] WHERE OrderID = @OrderID";
+        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@OrderID", orderId) });
+        return result == null ? 0 : Convert.ToInt32(result);
+    }
+
+    private string GetCustomerEmail(int customerId)
+    {
+        string query = "SELECT Email FROM Customer WHERE CustomerID = @CustomerID";
+        object result = RelicEcommerce.DBHelper.ExecuteScalar(query, new[] { new SqlParameter("@CustomerID", customerId) });
+        return result == null ? string.Empty : result.ToString();
     }
 
     private void ShowMessage(string message, bool isError)

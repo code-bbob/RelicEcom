@@ -85,6 +85,9 @@ public partial class ProductDetails : Page
                 btnAddToCart.CssClass = "bg-gray-300 text-gray-500 px-6 py-3 rounded-lg cursor-not-allowed font-semibold";
             }
 
+            LoadReviewSummary(ProductId);
+            LoadReviews(ProductId);
+
             pnlProduct.Visible = true;
             pnlNotFound.Visible = false;
         }
@@ -180,6 +183,52 @@ public partial class ProductDetails : Page
     {
         pnlProduct.Visible = false;
         pnlNotFound.Visible = true;
+    }
+
+    private void LoadReviewSummary(int productId)
+    {
+        string query = @"SELECT ISNULL(AVG(CAST(Rating AS DECIMAL(10,2))), 0) AS AverageRating,
+                                COUNT(*) AS ReviewCount
+                         FROM Review
+                         WHERE ProductID = @ProductID AND IsApproved = 1";
+
+        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
+        if (dt.Rows.Count == 0)
+        {
+            lblAverageRating.Text = "No ratings yet";
+            lblRatingSummary.Text = string.Empty;
+            return;
+        }
+
+        decimal average = Convert.ToDecimal(dt.Rows[0]["AverageRating"]);
+        int count = Convert.ToInt32(dt.Rows[0]["ReviewCount"]);
+
+        lblAverageRating.Text = count > 0
+            ? string.Format("{0:0.0}/5 {1}", average, GetStars((int)Math.Round(average)))
+            : "No ratings yet";
+        lblRatingSummary.Text = count > 0 ? count + " review" + (count == 1 ? string.Empty : "s") : string.Empty;
+    }
+
+    private void LoadReviews(int productId)
+    {
+        string query = @"SELECT TOP 10 r.Rating, r.ReviewText, r.ReviewDate, c.FirstName
+                         FROM Review r
+                         INNER JOIN Customer c ON c.CustomerID = r.CustomerID
+                         WHERE r.ProductID = @ProductID AND r.IsApproved = 1
+                         ORDER BY r.ReviewDate DESC";
+
+        DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, new[] { new SqlParameter("@ProductID", productId) });
+        rptReviews.DataSource = dt;
+        rptReviews.DataBind();
+        pnlNoReviews.Visible = dt.Rows.Count == 0;
+    }
+
+    protected string GetStars(int rating)
+    {
+        if (rating < 0) rating = 0;
+        if (rating > 5) rating = 5;
+
+        return new string('\u2605', rating) + new string('\u2606', 5 - rating);
     }
 
     private void ShowMessage(string message, bool isError)

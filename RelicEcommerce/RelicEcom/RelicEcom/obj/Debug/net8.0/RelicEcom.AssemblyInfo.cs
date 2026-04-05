@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RelicEcom")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b67e7e8407a8ea5106603830a18692acb4835a77")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfd7905edbc36311cc1d8e8fb8fe8d77e79f209f")]
 [assembly: System.Reflection.AssemblyProductAttribute("RelicEcom")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RelicEcom")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

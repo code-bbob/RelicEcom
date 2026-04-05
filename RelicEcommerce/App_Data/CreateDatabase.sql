@@ -164,6 +164,38 @@ BEGIN
 END
 GO
 
+-- Table: Notification
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Notification]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE Notification (
+        NotificationID INT PRIMARY KEY IDENTITY(1,1),
+        CustomerID INT NOT NULL,
+        Title NVARCHAR(150) NOT NULL,
+        Message NVARCHAR(MAX) NOT NULL,
+        IsRead BIT NOT NULL DEFAULT 0,
+        CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+        CONSTRAINT FK_Notification_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+    );
+END
+GO
+
+-- Table: OrderFeedback (transaction level feedback)
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OrderFeedback]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE OrderFeedback (
+        OrderFeedbackID INT PRIMARY KEY IDENTITY(1,1),
+        OrderID INT NOT NULL,
+        CustomerID INT NOT NULL,
+        Rating INT NOT NULL CHECK (Rating >= 1 AND Rating <= 5),
+        FeedbackText NVARCHAR(MAX),
+        FeedbackDate DATETIME NOT NULL DEFAULT GETDATE(),
+        CONSTRAINT FK_OrderFeedback_Order FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),
+        CONSTRAINT FK_OrderFeedback_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+        CONSTRAINT UQ_OrderFeedback_OrderCustomer UNIQUE (OrderID, CustomerID)
+    );
+END
+GO
+
 -- Insert Sample Categories
 INSERT INTO Category (CategoryName, Description, ImageUrl) VALUES
 ('Traditional Paintings', 'Authentic handmade paintings showcasing local art and culture', '/Images/categories/paintings.jpg'),

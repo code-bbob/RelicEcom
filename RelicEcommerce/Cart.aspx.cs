@@ -21,6 +21,7 @@ public partial class Cart : Page
         {
             GetCustomerId();
             LoadCart();
+            LoadPurchaseHistory();
         }
     }
 
@@ -55,7 +56,10 @@ public partial class Cart : Page
         GetCustomerId();
         
         if (customerId == 0)
+        {
+            pnlPurchaseHistory.Visible = false;
             return;
+        }
 
         try
         {
@@ -90,6 +94,37 @@ public partial class Cart : Page
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine("Error loading cart: " + ex.Message);
+        }
+
+        LoadPurchaseHistory();
+    }
+
+    private void LoadPurchaseHistory()
+    {
+        if (customerId == 0)
+        {
+            pnlPurchaseHistory.Visible = false;
+            return;
+        }
+
+        try
+        {
+            string query = @"SELECT TOP 5 OrderID, OrderDate, TotalAmount, OrderStatus
+                             FROM [Order]
+                             WHERE CustomerID = @CustomerID
+                             ORDER BY OrderDate DESC";
+
+            SqlParameter[] parameters = { new SqlParameter("@CustomerID", customerId) };
+            DataTable dt = RelicEcommerce.DBHelper.ExecuteQuery(query, parameters);
+
+            rptPurchaseHistory.DataSource = dt;
+            rptPurchaseHistory.DataBind();
+            pnlPurchaseHistory.Visible = dt.Rows.Count > 0;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Error loading purchase history: " + ex.Message);
+            pnlPurchaseHistory.Visible = false;
         }
     }
 
