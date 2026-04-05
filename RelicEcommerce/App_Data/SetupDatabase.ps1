@@ -19,7 +19,7 @@ function Test-SQLConnection {
 
 # Check for available SQL Server instances
 Write-Host "Checking for SQL Server instances..." -ForegroundColor Yellow
-$sqlInstances = @(".", ".\SQLEXPRESS", "(LocalDB)\MSSQLLocalDB")
+$sqlInstances = @("(LocalDB)\MSSQLLocalDB", ".\SQLEXPRESS", ".")
 $availableInstance = $null
 
 foreach ($instance in $sqlInstances) {
